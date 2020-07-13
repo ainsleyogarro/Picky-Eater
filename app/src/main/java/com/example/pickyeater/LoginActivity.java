@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ParseUser.logOut();
                 ParseUser user = new ParseUser();
                 user.setUsername(etUsername.getText().toString());
                 user.setPassword(etPassword.getText().toString());
