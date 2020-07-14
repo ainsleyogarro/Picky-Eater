@@ -31,6 +31,10 @@ public class LoginActivity extends AppCompatActivity {
         btnSignIn = findViewById(R.id.btnSignIn);
         btnSignUp = findViewById(R.id.btnRegister);
 
+
+        if (ParseUser.getCurrentUser() != null){
+            goMainActivity();
+        }
         // Signing in Feature
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

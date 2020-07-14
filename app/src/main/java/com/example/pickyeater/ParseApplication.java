@@ -1,6 +1,7 @@
 package com.example.pickyeater;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -41,6 +42,10 @@ public class ParseApplication extends Application {
         //ParseObject testObject = new ParseObject("TestObject");
         //testObject.put("foo", "bar");
         //testObject.saveInBackground();
+    }
+
+    public static YelpClient getRestClient(Context context) {
+        return (YelpClient) YelpClient.getInstance(YelpClient.class, context);
     }
 
 
