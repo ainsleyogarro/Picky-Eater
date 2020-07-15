@@ -44,9 +44,7 @@ public class ParseApplication extends Application {
         //testObject.saveInBackground();
     }
 
-    public static YelpClient getRestClient(Context context) {
-        return (YelpClient) YelpClient.getInstance(YelpClient.class, context);
-    }
+
 
 
 
