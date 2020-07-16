@@ -82,6 +82,7 @@ public class SearchFragment extends Fragment {
         final JSONArray results = new JSONArray();
 
 
+        // Client call to yelp api
         client.get(apiUrl,authorization, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
