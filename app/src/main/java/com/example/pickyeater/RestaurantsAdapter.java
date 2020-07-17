@@ -42,6 +42,12 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         return restaurants.size();
     }
 
+    public void clear(){
+
+        restaurants.clear();
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivRestaurant;

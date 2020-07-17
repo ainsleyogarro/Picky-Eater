@@ -71,51 +71,69 @@ public class SearchFragment extends Fragment {
         rvSearch.setLayoutManager(new LinearLayoutManager(getContext()));
         rvSearch.setAdapter(adapter);
 
-        AsyncHttpClient client = new AsyncHttpClient();
+        etSearch = view.findViewById(R.id.etSearch);
+        btnSearch = view.findViewById(R.id.btnSearch);
 
-
-        RequestHeaders authorization = new RequestHeaders();
-        authorization.put("Authorization", "Bearer " + REST_CONSUMER_SECRET);
-
-
-        String apiUrl = "https://api.yelp.com/v3/businesses/search";
-        RequestParams params = new RequestParams();
-
-        params.put("location", "Arbutus");
-        params.put("categories", "restaurant");
-        final JSONArray results = new JSONArray();
-
-
-        // Client call to yelp api
-        client.get(apiUrl,authorization, params, new JsonHttpResponseHandler() {
+        btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                JSONObject jsonObject = json.jsonObject;
-                try{
-                    JSONArray results = jsonObject.getJSONArray("businesses");
-
-                    for (int i = 0; i < results.length(); i++) {
-                        JSONObject rest = results.getJSONObject(i);
-                        Restaurant restaurant = new Restaurant(rest);
-                        restaurants.add(restaurant);
-                        adapter.notifyDataSetChanged();
-
-                    }
-
-
-
-                } catch (JSONException e) {
-                    Log.e(TAG, "Hit json exception",e);
+            public void onClick(View view) {
+                if (!etSearch.getText().toString().isEmpty()){
+                    fillView(etSearch.getText().toString());
+                    etSearch.setText("");
                 }
             }
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.i(TAG, throwable.toString() + response);
-
-            }
         });
+
     }
- }
+
+    // Fills recycler view with restaurants
+    public void fillView(String location){
+            AsyncHttpClient client = new AsyncHttpClient();
+
+
+            RequestHeaders authorization = new RequestHeaders();
+            authorization.put("Authorization", "Bearer " + REST_CONSUMER_SECRET);
+
+            adapter.clear();
+            String apiUrl = "https://api.yelp.com/v3/businesses/search";
+            RequestParams params = new RequestParams();
+
+            params.put("location", location);
+            params.put("categories", "restaurant");
+            final JSONArray results = new JSONArray();
+
+
+            // Client call to yelp api
+            client.get(apiUrl,authorization, params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    JSONObject jsonObject = json.jsonObject;
+                    try{
+                        JSONArray results = jsonObject.getJSONArray("businesses");
+
+                        for (int i = 0; i < results.length(); i++) {
+                            JSONObject rest = results.getJSONObject(i);
+                            Restaurant restaurant = new Restaurant(rest);
+                            restaurants.add(restaurant);
+                        }
+                        adapter.notifyDataSetChanged();
+
+
+
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Hit json exception",e);
+                    }
+                }
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.i(TAG, throwable.toString() + response);
+
+                }
+            });
+        }
+        }
+
+
 
 
 
