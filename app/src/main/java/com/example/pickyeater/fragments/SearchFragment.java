@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -57,6 +58,8 @@ public class SearchFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -64,6 +67,7 @@ public class SearchFragment extends Fragment {
         restaurants = new ArrayList<>();
         adapter = new RestaurantsAdapter(getContext(), restaurants);
         rvSearch = view.findViewById(R.id.rvRestaurantsSearch);
+
         rvSearch.setLayoutManager(new LinearLayoutManager(getContext()));
         rvSearch.setAdapter(adapter);
 

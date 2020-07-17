@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNavigationView.setSelectedItemId(R.id.action_home);
+
 
 
     }
