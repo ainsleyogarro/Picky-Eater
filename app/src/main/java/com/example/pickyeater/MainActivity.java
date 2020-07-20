@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_search:
                         fragment = new SearchFragment();
                         break;
-                    default:
+                     default:
                         fragment = new HomeFragment();
                         break;
                 }

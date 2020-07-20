@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.FriendsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFriends"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rvFriends"/>
+        android:layout_height="564dp" />
 
     <EditText
-        android:id="@+id/etSearchFriends"
+        android:id="@+id/etFriends"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rvFriends"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="0dp"
+        android:hint="Add friend"/>
+
+    <Button
+        android:id="@+id/btnFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rvFriends"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="0dp"
+        android:layout_alignRight="@id/etFriends"
+        android:text="Add" />
 
 
-</FrameLayout>
+</RelativeLayout>
