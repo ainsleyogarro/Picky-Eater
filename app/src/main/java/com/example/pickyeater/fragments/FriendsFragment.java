@@ -17,17 +17,20 @@ import com.example.pickyeater.FriendAdapter;
 import com.example.pickyeater.R;
 import com.example.pickyeater.RestaurantsAdapter;
 import com.example.pickyeater.models.Restaurant;
+import com.parse.Parse;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
 
 public class FriendsFragment extends Fragment {
     private static final String TAG = "FriendsFragment";
-    private ArrayList<Restaurant> friends;
+    private ArrayList<ParseUser> friends;
     private RecyclerView rvFriend;
     private EditText etFriends;
     private Button btnAdd;
     private FriendAdapter adapter;
+
 
 
     public FriendsFragment() {
@@ -50,6 +53,7 @@ public class FriendsFragment extends Fragment {
         etFriends = view.findViewById(R.id.etFriends);
         btnAdd =  view.findViewById(R.id.btnFriend);
         rvFriend = view.findViewById(R.id.rvFriends);
+
 
 
     }
