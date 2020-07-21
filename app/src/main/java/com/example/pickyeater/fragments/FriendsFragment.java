@@ -7,25 +7,33 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.pickyeater.FriendAdapter;
 import com.example.pickyeater.R;
 import com.example.pickyeater.RestaurantsAdapter;
 import com.example.pickyeater.models.Restaurant;
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FriendsFragment extends Fragment {
     private static final String TAG = "FriendsFragment";
-    private ArrayList<ParseUser> friends;
+    private List<ParseUser> friends;
+    private ArrayList<String> usernames;
     private RecyclerView rvFriend;
     private EditText etFriends;
     private Button btnAdd;
@@ -54,6 +62,59 @@ public class FriendsFragment extends Fragment {
         btnAdd =  view.findViewById(R.id.btnFriend);
         rvFriend = view.findViewById(R.id.rvFriends);
 
+        ParseUser.getCurrentUser().put("friends", new ArrayList<>());
+        friends = ParseUser.getCurrentUser().getList("friends");
+        if (friends == null){
+            friends = new ArrayList<>();
+            ParseUser.getCurrentUser().put("friends",friends);
+            ParseUser.getCurrentUser().saveInBackground();
+        }
+
+        usernames = new ArrayList<>();
+        for (ParseUser user:friends){
+            usernames.add(user.getUsername());
+        }
+
+
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!etFriends.getText().toString().isEmpty() ){
+                    try {
+                        ParseUser friend = QueryUser(etFriends.getText().toString());
+                        addUser(friend);
+                        Log.i(TAG,friends.size() + "");
+                        etFriends.setText("");
+                        //friends.add(friend);
+                        //usernames.add(friend.getUsername());
+                    } catch (ParseException e) {
+                        Log.e(TAG, "Issue with adding friend", e);
+                        Toast.makeText(getContext(), "User cannot be found", Toast.LENGTH_SHORT);
+                    }
+
+
+                }
+            }
+        });
+
+
+
+    }
+
+    public ParseUser QueryUser(final String username) throws ParseException {
+        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+        query.whereEqualTo("username", username);
+        return query.getFirst();
+    }
+    public void addUser(ParseUser user){
+      if (usernames.contains(user.getUsername()))  {
+          Toast.makeText(getContext(), "User is already a friend", Toast.LENGTH_SHORT).show();
+          return;
+      }
+      usernames.add(user.getUsername());
+      ParseUser.getCurrentUser().getList("friends").add(user);
+      ParseUser.getCurrentUser().saveInBackground();
 
 
     }
