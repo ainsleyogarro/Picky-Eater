@@ -62,7 +62,7 @@ public class FriendsFragment extends Fragment {
         btnAdd =  view.findViewById(R.id.btnFriend);
         rvFriend = view.findViewById(R.id.rvFriends);
 
-        ParseUser.getCurrentUser().put("friends", new ArrayList<>());
+
         friends = ParseUser.getCurrentUser().getList("friends");
         if (friends == null){
             friends = new ArrayList<>();
@@ -71,8 +71,14 @@ public class FriendsFragment extends Fragment {
         }
 
         usernames = new ArrayList<>();
+
+        // Creates lists of usernames of friends
         for (ParseUser user:friends){
-            usernames.add(user.getUsername());
+            try {
+                usernames.add(user.fetchIfNeeded().getUsername());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
 
@@ -107,6 +113,8 @@ public class FriendsFragment extends Fragment {
         query.whereEqualTo("username", username);
         return query.getFirst();
     }
+
+    // Adds user to friends list
     public void addUser(ParseUser user){
       if (usernames.contains(user.getUsername()))  {
           Toast.makeText(getContext(), "User is already a friend", Toast.LENGTH_SHORT).show();
