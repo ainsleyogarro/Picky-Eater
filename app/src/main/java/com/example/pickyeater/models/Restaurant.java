@@ -11,12 +11,13 @@ public class Restaurant  {
     private String title;
     private String imageUrl;
     private String address;
+    private String id;
 
     public Restaurant(JSONObject jsonObject) throws JSONException{
         title = jsonObject.getString("name");
         imageUrl = jsonObject.getString("image_url");
         address = jsonObject.getJSONObject("location").getString("address1");
-
+        id = jsonObject.getString("id");
     }
 
     public Restaurant(){
@@ -47,5 +48,11 @@ public class Restaurant  {
         this.address = address;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }

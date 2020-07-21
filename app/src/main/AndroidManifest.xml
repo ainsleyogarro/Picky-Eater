@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:name=".ParseApplication"
         android:allowBackup="true"
@@ -16,23 +15,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".DetailActivity"></activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
                 <data
                     android:host="cprest"
                     android:scheme="oauth" />
-
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-
-
-
-</application>
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+    </application>
 
 </manifest>

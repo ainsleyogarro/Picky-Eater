@@ -1,6 +1,7 @@
 package com.example.pickyeater;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,15 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvAddress = itemView.findViewById(R.id.tvAddress);
             ivRestaurant = itemView.findViewById(R.id.ivRestaurant);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("id", restaurants.get(getAdapterPosition()).getId());
+                    context.startActivity(intent);
+                }
+            });
         }
 
         public void bind(Restaurant restaurant) {
