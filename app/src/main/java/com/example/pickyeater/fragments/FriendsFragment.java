@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -69,6 +70,10 @@ public class FriendsFragment extends Fragment {
             ParseUser.getCurrentUser().put("friends",friends);
             ParseUser.getCurrentUser().saveInBackground();
         }
+        adapter = new FriendAdapter(getContext(), friends);
+
+        rvFriend.setAdapter(adapter);
+        rvFriend.setLayoutManager(new LinearLayoutManager(getContext()));
 
         usernames = new ArrayList<>();
 

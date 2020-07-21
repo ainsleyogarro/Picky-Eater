@@ -1,6 +1,7 @@
 package com.example.pickyeater;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     private Context context;
     private List<ParseUser> friends;
+    private final static String TAG = "FriendAdapter";
 
     public FriendAdapter(Context context, List<ParseUser> friends){
         this.context = context;
@@ -61,7 +63,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
             tvUsername.setText(parseUser.getUsername());
             if (parseUser.getParseFile("Picture") != null){
-                Glide.with(context).load(parseUser.getParseFile("Picture")).into(ivProfilePicture);
+                Glide.with(context).load(parseUser.getParseFile("Picture").getUrl()).into(ivProfilePicture);
+                Log.i(TAG, parseUser.getParseFile("Picture").getUrl());
                 ivProfilePicture.setVisibility(View.VISIBLE);
             }
             else {
