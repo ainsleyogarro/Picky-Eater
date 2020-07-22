@@ -18,8 +18,10 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.pickyeater.models.ParseRestaurant;
 import com.example.pickyeater.models.Restaurant;
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
@@ -27,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Headers;
@@ -67,7 +70,7 @@ public class DetailActivity extends AppCompatActivity {
         btnAddRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ParseRestaurant(currrentRestaurant);
+                AddRestaurant(currrentRestaurant);
             }
         });
 
@@ -97,8 +100,14 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    // Sees if Restaurant exists in backend if not creates Restaurant
-    private void ParseRestaurant(final Restaurant restaurant){
+    // Sees if Restaurant exists in backend if not creates Restaurant then adds to users list
+    private void AddRestaurant(final Restaurant restaurant){
+
+        // First make sure user has Restaurant list
+        if (ParseUser.getCurrentUser().getList("Restaurants") == null){
+            ParseUser.getCurrentUser().put("Restaurants", new ArrayList<ParseRestaurant>());
+        }
+
         ParseQuery<ParseRestaurant> query = ParseQuery.getQuery(ParseRestaurant.class);
         query.include(ParseRestaurant.KEY_ID);
         query.whereEqualTo(ParseRestaurant.KEY_ID, restaurant.getId());
@@ -106,10 +115,11 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseRestaurant> restaurants, ParseException e) {
                 if (restaurants.size() != 0){
+                    ParseUser.getCurrentUser().getList("Restaurants").add(restaurants.get(0));
                     return;
                 }
                 else{
-                    ParseRestaurant newRestaurant = new ParseRestaurant();
+                    final ParseRestaurant newRestaurant = new ParseRestaurant();
                     newRestaurant.setKeyId(restaurant.getId());
                     newRestaurant.setKeyImageUrl(restaurant.getImageUrl());
                     newRestaurant.setKeyTitle(restaurant.getTitle());
@@ -122,6 +132,8 @@ public class DetailActivity extends AppCompatActivity {
                             }
                             else {
                                 Log.i(TAG, "Successful saving");
+                                ParseUser.getCurrentUser().getList("Restaurants").add(newRestaurant);
+
                             }
                         }
                     });
