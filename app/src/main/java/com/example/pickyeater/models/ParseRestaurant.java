@@ -7,7 +7,7 @@ import com.parse.ParseObject;
 public class ParseRestaurant extends ParseObject {
 
     public static final String KEY_TITLE = "Title";
-    public static final String KEY_ID = "id";
+    public static final String KEY_ID = "Restid";
     public static final String KEY_IMAGE_URL = "imageUrl";
     public static final String KEY_ADDRESS = "address";
 
@@ -38,5 +38,9 @@ public class ParseRestaurant extends ParseObject {
 
     public  String getKeyAddress() {
         return getString(KEY_ADDRESS);
+    }
+
+    public void setKeyAddress(String address){
+        put(KEY_ADDRESS, address);
     }
 }

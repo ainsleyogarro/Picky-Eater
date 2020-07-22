@@ -3,6 +3,9 @@ package com.example.pickyeater;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -12,12 +15,19 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestHeaders;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.pickyeater.models.ParseRestaurant;
 import com.example.pickyeater.models.Restaurant;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
+
+import java.util.List;
 
 import okhttp3.Headers;
 
@@ -28,6 +38,8 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tvAddress;
     private RatingBar rbRestaurant;
     private TextView tvHours;
+    private Button btnAddRemove;
+    private static String TAG = "DetailActivity";
 
 
     @Override
@@ -40,16 +52,24 @@ public class DetailActivity extends AppCompatActivity {
        tvAddress = findViewById(R.id.tvAddressDetail);
        rbRestaurant = findViewById(R.id.rbRestaurant);
        tvHours = findViewById(R.id.tvHours);
+       btnAddRemove = findViewById(R.id.btnAddRemove);
 
         AsyncHttpClient client = new AsyncHttpClient();
 
         RequestHeaders authorization = new RequestHeaders();
         authorization.put("Authorization", "Bearer " + REST_CONSUMER_SECRET);
 
-        Restaurant currrentRestaurant = Parcels.unwrap(getIntent().getParcelableExtra("restaurant"));
+        final Restaurant currrentRestaurant = Parcels.unwrap(getIntent().getParcelableExtra("restaurant"));
 
         String apiUrl = "https://api.yelp.com/v3/businesses/" +  currrentRestaurant.getId();
         RequestParams params = new RequestParams();
+
+        btnAddRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseRestaurant(currrentRestaurant);
+            }
+        });
 
         client.get(apiUrl, authorization, params, new JsonHttpResponseHandler() {
             @Override
@@ -75,6 +95,40 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    // Sees if Restaurant exists in backend if not creates Restaurant
+    private void ParseRestaurant(final Restaurant restaurant){
+        ParseQuery<ParseRestaurant> query = ParseQuery.getQuery(ParseRestaurant.class);
+        query.include(ParseRestaurant.KEY_ID);
+        query.whereEqualTo(ParseRestaurant.KEY_ID, restaurant.getId());
+        query.findInBackground(new FindCallback<ParseRestaurant>() {
+            @Override
+            public void done(List<ParseRestaurant> restaurants, ParseException e) {
+                if (restaurants.size() != 0){
+                    return;
+                }
+                else{
+                    ParseRestaurant newRestaurant = new ParseRestaurant();
+                    newRestaurant.setKeyId(restaurant.getId());
+                    newRestaurant.setKeyImageUrl(restaurant.getImageUrl());
+                    newRestaurant.setKeyTitle(restaurant.getTitle());
+                    newRestaurant.setKeyAddress(restaurant.getAddress());
+                    newRestaurant.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null){
+                                Log.e(TAG, "Error while saving", e);
+                            }
+                            else {
+                                Log.i(TAG, "Successful saving");
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
     // Takes time range and day and returns desired formatted output

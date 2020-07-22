@@ -3,6 +3,7 @@ package com.example.pickyeater;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.pickyeater.models.ParseRestaurant;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -24,6 +25,7 @@ public class ParseApplication extends Application {
         // Use for mointoring Parse OkHttp traffic
 
 
+        ParseObject.registerSubclass(ParseRestaurant.class);
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
@@ -31,7 +33,6 @@ public class ParseApplication extends Application {
         builder.networkInterceptors().add(httpLoggingInterceptor);
 
         // set applicationId, and server server based on the values in the Heroku settings
-
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("picky-eater")

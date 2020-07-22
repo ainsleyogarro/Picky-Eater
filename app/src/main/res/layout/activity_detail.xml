@@ -40,6 +40,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rbRestaurant" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add/Remove"
+        android:id="@+id/btnAddRemove"
+        android:layout_below="@+id/tvHours"/>
+
 
 
 </RelativeLayout>
