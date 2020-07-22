@@ -5,8 +5,10 @@ import com.parse.ParseObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 //@ParseClassName("Restaurant")
+@Parcel
 public class Restaurant  {
     private String title;
     private String imageUrl;

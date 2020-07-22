@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.pickyeater.models.Restaurant;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.ViewHolder> {
@@ -66,7 +68,8 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra("id", restaurants.get(getAdapterPosition()).getId());
+                    //intent.putExtra("id", restaurants.get(getAdapterPosition()).getId());
+                    intent.putExtra("restaurant", Parcels.wrap(restaurants.get(getAdapterPosition())));
                     context.startActivity(intent);
                 }
             });

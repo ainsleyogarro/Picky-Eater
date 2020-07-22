@@ -12,10 +12,12 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestHeaders;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.pickyeater.models.Restaurant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import okhttp3.Headers;
 
@@ -44,7 +46,9 @@ public class DetailActivity extends AppCompatActivity {
         RequestHeaders authorization = new RequestHeaders();
         authorization.put("Authorization", "Bearer " + REST_CONSUMER_SECRET);
 
-        String apiUrl = "https://api.yelp.com/v3/businesses/" +  getIntent().getStringExtra("id");;
+        Restaurant currrentRestaurant = Parcels.unwrap(getIntent().getParcelableExtra("restaurant"));
+
+        String apiUrl = "https://api.yelp.com/v3/businesses/" +  currrentRestaurant.getId();
         RequestParams params = new RequestParams();
 
         client.get(apiUrl, authorization, params, new JsonHttpResponseHandler() {
@@ -73,6 +77,7 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    // Takes time range and day and returns desired formatted output
     public String HoursConverter(String start, String end, int day){
         String open = MilitarytoNormal(start);
         String close = MilitarytoNormal(end);
@@ -81,30 +86,31 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         else if (day == 1){
-            return "Tues" + open + "-" + close;
+            return "Tues " + open + "-" + close;
         }
 
         else if (day == 2){
             return "Wed " + open + "-" + close;
         }
         else if (day == 3){
-            return "Thurs" + open + "-" + close;
+            return "Thurs " + open + "-" + close;
         }
 
         else if (day == 4){
-            return "Tues" + open + "-" + close;
+            return "Tues " + open + "-" + close;
         }
 
         else if (day == 5){
             return "Fri " + open + "-" + close;
         }
         else {
-            return "Sat" + open + "-" + close;
+            return "Sat " + open + "-" + close;
         }
 
 
     }
 
+    // Converts military time to normal
     public String MilitarytoNormal(String time){
         String newtime = "";
         String first2digits = time.substring(0,2);
