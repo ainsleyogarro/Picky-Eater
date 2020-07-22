@@ -43,6 +43,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tvHours;
     private Button btnAddRemove;
     private static String TAG = "DetailActivity";
+    private List<ParseRestaurant> Userrestaurants;
 
 
     @Override
@@ -56,6 +57,8 @@ public class DetailActivity extends AppCompatActivity {
        rbRestaurant = findViewById(R.id.rbRestaurant);
        tvHours = findViewById(R.id.tvHours);
        btnAddRemove = findViewById(R.id.btnAddRemove);
+
+       Userrestaurants = ParseUser.getCurrentUser().getList("Restaurants");
 
         AsyncHttpClient client = new AsyncHttpClient();
 
@@ -104,8 +107,8 @@ public class DetailActivity extends AppCompatActivity {
     private void AddRestaurant(final Restaurant restaurant){
 
         // First make sure user has Restaurant list
-        if (ParseUser.getCurrentUser().getList("Restaurants") == null){
-            ParseUser.getCurrentUser().put("Restaurants", new ArrayList<ParseRestaurant>());
+        if (Userrestaurants == null){
+            Userrestaurants = new ArrayList<>();
         }
 
         ParseQuery<ParseRestaurant> query = ParseQuery.getQuery(ParseRestaurant.class);
@@ -115,7 +118,10 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseRestaurant> restaurants, ParseException e) {
                 if (restaurants.size() != 0){
-                    ParseUser.getCurrentUser().getList("Restaurants").add(restaurants.get(0));
+                    Userrestaurants.add(restaurants.get(0));
+                    ParseUser.getCurrentUser().put("restaurants",Userrestaurants);
+                    ParseUser.getCurrentUser().saveInBackground();
+                    Log.i(TAG, ParseUser.getCurrentUser().getList("Restaurants").toString());
                     return;
                 }
                 else{
@@ -132,8 +138,10 @@ public class DetailActivity extends AppCompatActivity {
                             }
                             else {
                                 Log.i(TAG, "Successful saving");
-                                ParseUser.getCurrentUser().getList("Restaurants").add(newRestaurant);
-
+                                Userrestaurants.add(newRestaurant);
+                                ParseUser.getCurrentUser().put("restaurants",Userrestaurants);
+                                Log.i(TAG, ParseUser.getCurrentUser().getList("Restaurants").toString());
+                                ParseUser.getCurrentUser().saveInBackground();
                             }
                         }
                     });

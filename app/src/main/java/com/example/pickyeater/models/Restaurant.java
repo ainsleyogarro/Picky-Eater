@@ -1,6 +1,7 @@
 package com.example.pickyeater.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import org.json.JSONException;
@@ -20,6 +21,13 @@ public class Restaurant  {
         imageUrl = jsonObject.getString("image_url");
         address = jsonObject.getJSONObject("location").getString("address1");
         id = jsonObject.getString("id");
+    }
+
+    public Restaurant(ParseRestaurant restaurant) throws ParseException {
+        title = restaurant.fetchIfNeeded().getString("Title");
+        imageUrl = restaurant.fetchIfNeeded().getString("imageUrl");
+        id = restaurant.fetchIfNeeded().getString("Restid");
+        address = restaurant.fetchIfNeeded().getString("address");
     }
 
     public Restaurant(){

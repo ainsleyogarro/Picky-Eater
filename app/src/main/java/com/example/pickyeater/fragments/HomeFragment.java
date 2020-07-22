@@ -8,13 +8,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.pickyeater.R;
 import com.example.pickyeater.RestaurantsAdapter;
+import com.example.pickyeater.models.ParseRestaurant;
 import com.example.pickyeater.models.Restaurant;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +30,9 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView rvRestaraunts;
     private List<Restaurant> restaurants;
+    private List<ParseRestaurant> parseRestaurants;
     private RestaurantsAdapter adapter;
+    private static String TAG = "HomeFragment";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -48,25 +54,23 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Restaurant Granny = new Restaurant();
-        Granny.setAddress("9712 Groffs Mill Dr");
-        Granny.setImageUrl("https://s3-media0.fl.yelpcdn.com/bphoto/0Dq-rfP6vjCwsAx9ZHrXfw/o.jpg");
-        Granny.setTitle("Granny's Restaurant");
-
-        Restaurant Stanford = new Restaurant();
-        Stanford.setAddress("10997 Owings Mills Blvd");
-        Stanford.setImageUrl("https://s3-media0.fl.yelpcdn.com/bphoto/5SK7Ec7ml0zLhdk7HraLCQ/348s.jpg");
-        Stanford.setTitle("Stanford Kitchen");
-
-        Restaurant ShakingCrab = new Restaurant();
-        ShakingCrab.setAddress("11316 Reisterstown Rd");
-        ShakingCrab.setTitle("Shaking Crab");
-        ShakingCrab.setImageUrl("https://s3-media0.fl.yelpcdn.com/bphoto/jdGElTrjRevv0h1hxusnUQ/348s.jpg");
-
         restaurants = new ArrayList<>();
-        restaurants.add(Granny);
-        restaurants.add(Stanford);
-        restaurants.add(ShakingCrab);
+
+        parseRestaurants = ParseUser.getCurrentUser().getList("Restaurants");
+        if (parseRestaurants == null){
+            parseRestaurants = new ArrayList<>();
+        }
+
+        for (ParseRestaurant pRestaurant: parseRestaurants
+             ) {
+            try {
+                restaurants.add(new Restaurant(pRestaurant));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Log.i(TAG, restaurants.toString());
 
         adapter = new RestaurantsAdapter(getApplicationContext() , restaurants);
         rvRestaraunts = view.findViewById(R.id.rvRestaurants);
