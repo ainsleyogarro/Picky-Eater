@@ -122,12 +122,15 @@ public class DetailActivity extends AppCompatActivity {
         query.findInBackground(new FindCallback<ParseRestaurant>() {
             @Override
             public void done(List<ParseRestaurant> restaurants, ParseException e) {
+                // If restaurant is already created in Parse
                 if (restaurants.size() != 0){
+
+                    // Restaurant add function
                     if (isAdded(restaurants.get(0)) == false){
                         Userrestaurants.add(restaurants.get(0));
                         ParseUser.getCurrentUser().put("restaurants",Userrestaurants);
                         ParseUser.getCurrentUser().saveInBackground();
-                    Log.i(TAG, ParseUser.getCurrentUser().getList("Restaurants").toString());
+                        Log.i(TAG, ParseUser.getCurrentUser().getList("Restaurants").toString());
                     }
                     else {
                         ParseUser.getCurrentUser().put("restaurants",Userrestaurants);
@@ -137,6 +140,8 @@ public class DetailActivity extends AppCompatActivity {
 
                     return;
                 }
+
+                // If restaurant is in parse
                 else{
                     final ParseRestaurant newRestaurant = new ParseRestaurant();
                     newRestaurant.setKeyId(restaurant.getId());
@@ -161,12 +166,14 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Go back to home screen
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
 
     }
 
-    // Used to Remove
+    // Used to see if Restaurant exists and if so removes
     private boolean isAdded(ParseRestaurant restaurant){
         for (int i = 0; i < Userrestaurants.size(); i++) {
 

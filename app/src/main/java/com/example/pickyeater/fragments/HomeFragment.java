@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ public class HomeFragment extends Fragment {
     private List<ParseRestaurant> parseRestaurants;
     private RestaurantsAdapter adapter;
     private static String TAG = "HomeFragment";
+    private SwipeRefreshLayout swipeContainer;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -72,9 +74,45 @@ public class HomeFragment extends Fragment {
 
         Log.i(TAG, restaurants.toString());
 
+
         adapter = new RestaurantsAdapter(getApplicationContext() , restaurants);
         rvRestaraunts = view.findViewById(R.id.rvRestaurants);
         rvRestaraunts.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rvRestaraunts.setAdapter(adapter);
+
+
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+
+        // Refresh
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapter.clear();
+                restaurants = new ArrayList<>();
+
+                parseRestaurants = ParseUser.getCurrentUser().getList("Restaurants");
+                if (parseRestaurants == null){
+                    parseRestaurants = new ArrayList<>();
+                }
+
+                for (ParseRestaurant pRestaurant: parseRestaurants
+                ) {
+                    try {
+                        restaurants.add(new Restaurant(pRestaurant));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                adapter.addAll(restaurants);
+
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
+
+
+
+
+
     }
 }

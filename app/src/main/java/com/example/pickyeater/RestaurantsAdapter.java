@@ -51,6 +51,12 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         notifyDataSetChanged();
     }
 
+    // Add a list of items -- change to type used
+    public void addAll(List<Restaurant> list) {
+        restaurants.addAll(list);
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivRestaurant;
