@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if (ParseUser.getCurrentUser() != null){
+            //ParseUser.logOut();
             goMainActivity();
         }
         // Signing in Feature
