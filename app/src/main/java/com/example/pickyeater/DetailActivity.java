@@ -126,12 +126,13 @@ public class DetailActivity extends AppCompatActivity {
                 if (restaurants.size() != 0){
 
                     // Restaurant add function
-                    if (isAdded(restaurants.get(0)) == false){
+                    if (RemoveFrom(restaurants.get(0)) == false){
                         Userrestaurants.add(restaurants.get(0));
                         ParseUser.getCurrentUser().put("restaurants",Userrestaurants);
                         ParseUser.getCurrentUser().saveInBackground();
                         Log.i(TAG, ParseUser.getCurrentUser().getList("Restaurants").toString());
                     }
+                    // If restaurant removed
                     else {
                         ParseUser.getCurrentUser().put("restaurants",Userrestaurants);
                         ParseUser.getCurrentUser().saveInBackground();
@@ -174,7 +175,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     // Used to see if Restaurant exists and if so removes
-    private boolean isAdded(ParseRestaurant restaurant){
+    private boolean RemoveFrom(ParseRestaurant restaurant){
         for (int i = 0; i < Userrestaurants.size(); i++) {
 
             if (Userrestaurants.get(i).getKeyId().equals(restaurant.getKeyId())) {
