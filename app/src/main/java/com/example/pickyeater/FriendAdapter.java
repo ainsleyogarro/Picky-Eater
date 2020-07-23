@@ -1,6 +1,7 @@
 package com.example.pickyeater;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -57,6 +60,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             super(itemView);
             ivProfilePicture = itemView.findViewById(R.id.ivProfilePic);
             tvUsername = itemView.findViewById(R.id.tvUsername);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra("user", Parcels.wrap(friends.get(getAdapterPosition())));
+                    context.startActivity(intent);
+                }
+            });
         }
 
         public void bind(ParseUser parseUser) {
