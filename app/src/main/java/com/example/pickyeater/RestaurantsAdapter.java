@@ -70,6 +70,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
                     Intent intent = new Intent(context, DetailActivity.class);
                     //intent.putExtra("id", restaurants.get(getAdapterPosition()).getId());
                     intent.putExtra("restaurant", Parcels.wrap(restaurants.get(getAdapterPosition())));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                     context.startActivity(intent);
                 }
             });

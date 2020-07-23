@@ -2,6 +2,7 @@ package com.example.pickyeater;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
@@ -44,6 +46,7 @@ public class DetailActivity extends AppCompatActivity {
     private Button btnAddRemove;
     private static String TAG = "DetailActivity";
     private List<ParseRestaurant> Userrestaurants;
+    private ArrayList<String> restaurantsID;
 
 
     @Override
@@ -59,6 +62,8 @@ public class DetailActivity extends AppCompatActivity {
        btnAddRemove = findViewById(R.id.btnAddRemove);
 
        Userrestaurants = ParseUser.getCurrentUser().getList("Restaurants");
+
+
 
         AsyncHttpClient client = new AsyncHttpClient();
 
@@ -118,10 +123,18 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseRestaurant> restaurants, ParseException e) {
                 if (restaurants.size() != 0){
-                    Userrestaurants.add(restaurants.get(0));
-                    ParseUser.getCurrentUser().put("restaurants",Userrestaurants);
-                    ParseUser.getCurrentUser().saveInBackground();
+                    if (isAdded(restaurants.get(0)) == false){
+                        Userrestaurants.add(restaurants.get(0));
+                        ParseUser.getCurrentUser().put("restaurants",Userrestaurants);
+                        ParseUser.getCurrentUser().saveInBackground();
                     Log.i(TAG, ParseUser.getCurrentUser().getList("Restaurants").toString());
+                    }
+                    else {
+                        ParseUser.getCurrentUser().put("restaurants",Userrestaurants);
+                        ParseUser.getCurrentUser().saveInBackground();
+                        Log.i(TAG, "Remove " + ParseUser.getCurrentUser().getList("Restaurants").toString());
+                    }
+
                     return;
                 }
                 else{
@@ -148,7 +161,22 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
 
+    }
+
+    // Used to Remove
+    private boolean isAdded(ParseRestaurant restaurant){
+        for (int i = 0; i < Userrestaurants.size(); i++) {
+
+            if (Userrestaurants.get(i).getKeyId().equals(restaurant.getKeyId())) {
+                Userrestaurants.remove(i);
+
+                return true;
+            }
+        }
+        return false;
     }
 
     // Takes time range and day and returns desired formatted output
