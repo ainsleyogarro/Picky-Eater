@@ -33,8 +33,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if (ParseUser.getCurrentUser() != null){
-            //ParseUser.logOut();
-            goMainActivity();
+            ParseUser.logOut();
+            //goMainActivity();
         }
         // Signing in Feature
         btnSignIn.setOnClickListener(new View.OnClickListener() {

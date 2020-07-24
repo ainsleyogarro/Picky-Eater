@@ -28,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
     private RestaurantsAdapter adapter;
     private List<Restaurant> restaurants;
     private List<ParseRestaurant> parseRestaurants;
+    private List<String> restaurantIDs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class ProfileActivity extends AppCompatActivity {
         btnFusion = findViewById(R.id.btnFusion);
         rvFriendRestaurantList = findViewById(R.id.rvProfileLists);
 
+
+        restaurantIDs = new ArrayList<>();
         Glide.with(getApplicationContext()).load(profile.getParseFile("Picture").getUrl()).into(ivProfilePic);
 
         restaurants = new ArrayList<>();
@@ -51,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
              parseRestaurants) {
             try {
                 restaurants.add(new Restaurant(pRestaurant));
+                restaurantIDs.add(pRestaurant.getKeyId());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -77,20 +81,22 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void FuseLists() throws ParseException {
         ArrayList<Restaurant> fuseRestaurants = new ArrayList();
-        ArrayList<Restaurant> myRestaurants  = new ArrayList();
+        ArrayList<String> myRestaurantIDs  = new ArrayList();
+        ArrayList<Restaurant> myRestaurants = new ArrayList<>();
         List<ParseRestaurant> myParseRestaurants = ParseUser.getCurrentUser().getList("restaurants");
         if (myParseRestaurants == null){
             myParseRestaurants = new ArrayList<>();
         }
         for (ParseRestaurant myParseRestaurant:
              myParseRestaurants) {
+            myRestaurantIDs.add(myParseRestaurant.getKeyId());
             myRestaurants.add(new Restaurant(myParseRestaurant));
         }
 
         // Used if myRestaurants is smaller to save time
         if (myRestaurants.size() < restaurants.size()){
             for (int i = 0; i < myRestaurants.size(); i++) {
-                    if (restaurants.contains(myRestaurants.get(i))){
+                    if (restaurantIDs.contains(myRestaurantIDs.get(i))){
                         fuseRestaurants.add(myRestaurants.get(i));
                     }
 
@@ -101,7 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Used if Restaurants is smaller to save time
         else{
             for (int i = 0; i < restaurants.size(); i++) {
-                if (myRestaurants.contains(restaurants.get(i))){
+                if (myRestaurantIDs.contains(restaurantIDs.get(i))){
                     fuseRestaurants.add(restaurants.get(i));
                 }
 
