@@ -126,7 +126,8 @@ public class FriendsFragment extends Fragment {
           return;
       }
       usernames.add(user.getUsername());
-      ParseUser.getCurrentUser().getList("friends").add(user);
+      friends.add(user);
+      ParseUser.getCurrentUser().put("friends",friends);
       ParseUser.getCurrentUser().saveInBackground();
 
 
