@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
 
         restaurants = new ArrayList<>();
 
-        parseRestaurants = ParseUser.getCurrentUser().getList("Restaurants");
+        parseRestaurants = ParseUser.getCurrentUser().getList("restaurants");
         if (parseRestaurants == null){
             parseRestaurants = new ArrayList<>();
         }
@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment {
                 adapter.clear();
                 restaurants = new ArrayList<>();
 
-                parseRestaurants = ParseUser.getCurrentUser().getList("Restaurants");
+                parseRestaurants = ParseUser.getCurrentUser().getList("restaurants");
                 if (parseRestaurants == null){
                     parseRestaurants = new ArrayList<>();
                 }

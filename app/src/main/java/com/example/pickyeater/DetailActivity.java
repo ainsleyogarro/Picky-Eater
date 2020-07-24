@@ -61,7 +61,7 @@ public class DetailActivity extends AppCompatActivity {
        tvHours = findViewById(R.id.tvHours);
        btnAddRemove = findViewById(R.id.btnAddRemove);
 
-       Userrestaurants = ParseUser.getCurrentUser().getList("Restaurants");
+       Userrestaurants = ParseUser.getCurrentUser().getList("restaurants");
 
 
 
@@ -130,7 +130,7 @@ public class DetailActivity extends AppCompatActivity {
                         Userrestaurants.add(restaurants.get(0));
                         ParseUser.getCurrentUser().put("restaurants",Userrestaurants);
                         ParseUser.getCurrentUser().saveInBackground();
-                        Log.i(TAG, ParseUser.getCurrentUser().getList("Restaurants").toString());
+                        Log.i(TAG, ParseUser.getCurrentUser().getList("restaurants").toString());
                     }
                     // If restaurant removed
                     else {
@@ -159,7 +159,7 @@ public class DetailActivity extends AppCompatActivity {
                                 Log.i(TAG, "Successful saving");
                                 Userrestaurants.add(newRestaurant);
                                 ParseUser.getCurrentUser().put("restaurants",Userrestaurants);
-                                Log.i(TAG, ParseUser.getCurrentUser().getList("Restaurants").toString());
+                                Log.i(TAG, ParseUser.getCurrentUser().getList("restaurants").toString());
                                 ParseUser.getCurrentUser().saveInBackground();
                             }
                         }

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -59,6 +60,55 @@ public class ProfileActivity extends AppCompatActivity {
         adapter = new RestaurantsAdapter(getApplicationContext(), restaurants);
 
         rvFriendRestaurantList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rvFriendRestaurantList.setAdapter(adapter);
+        
+        btnFusion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    FuseLists();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    private void FuseLists() throws ParseException {
+        ArrayList<Restaurant> fuseRestaurants = new ArrayList();
+        ArrayList<Restaurant> myRestaurants  = new ArrayList();
+        List<ParseRestaurant> myParseRestaurants = ParseUser.getCurrentUser().getList("restaurants");
+        if (myParseRestaurants == null){
+            myParseRestaurants = new ArrayList<>();
+        }
+        for (ParseRestaurant myParseRestaurant:
+             myParseRestaurants) {
+            myRestaurants.add(new Restaurant(myParseRestaurant));
+        }
+
+        // Used if myRestaurants is smaller to save time
+        if (myRestaurants.size() < restaurants.size()){
+            for (int i = 0; i < myRestaurants.size(); i++) {
+                    if (restaurants.contains(myRestaurants.get(i))){
+                        fuseRestaurants.add(myRestaurants.get(i));
+                    }
+
+            }
+
+        }
+
+        // Used if Restaurants is smaller to save time
+        else{
+            for (int i = 0; i < restaurants.size(); i++) {
+                if (myRestaurants.contains(restaurants.get(i))){
+                    fuseRestaurants.add(restaurants.get(i));
+                }
+
+            }
+        }
+
+        adapter = new RestaurantsAdapter(getApplicationContext(), fuseRestaurants);
         rvFriendRestaurantList.setAdapter(adapter);
 
     }
