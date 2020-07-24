@@ -20,6 +20,7 @@ import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.pickyeater.fragments.FriendsFragment;
 import com.example.pickyeater.fragments.HomeFragment;
+import com.example.pickyeater.fragments.ProfileFragment;
 import com.example.pickyeater.fragments.SearchFragment;
 import com.example.pickyeater.models.Restaurant;
 import com.github.scribejava.core.model.OAuthRequest;
@@ -66,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.action_search:
                         fragment = new SearchFragment();
+                        break;
+
+                    case R.id.action_profile:
+                        fragment = new ProfileFragment();
                         break;
                      default:
                         fragment = new HomeFragment();
