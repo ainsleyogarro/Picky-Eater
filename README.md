@@ -14,7 +14,7 @@
 [Evaluation of your app across the following attributes]
 - **Category:** Dining
 - **Mobile:** Allows for profile picture to be updated
-- **Story:**
+- **Story:** Interactive experience that helps picky 
 - **Market:** Can be used by those with very specific food palets
 - **Habit:** Can be used every time someone will go out and eat
 - **Scope:** /can be expanded from just a app about restaraunts to having a whole social aspect to it
@@ -85,15 +85,14 @@
 
 * Login
    * List Restaraunt
-   
 * Search Screen
     * Restaraunt Screen
 * Restaraunt Screen
     * Restaraunt List Screen
 * Friend List
     * Their Restaraunt List Screen
-    * Combined Restaraunt List Screen
 * Profile Screen
+    * Combined Restaraunt List Screen
 
 
 ## Wireframes
