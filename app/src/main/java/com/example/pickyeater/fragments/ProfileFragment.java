@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.pickyeater.CaptureActivity;
 import com.example.pickyeater.LoginActivity;
 import com.example.pickyeater.MainActivity;
 import com.example.pickyeater.R;
@@ -27,6 +28,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvFriendCount;
     private TextView tvFoodCount;
     private Button btnSignOut;
+    private Button btnCapture;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +44,7 @@ public class ProfileFragment extends Fragment {
         tvFriendCount = view.findViewById(R.id.tvFriendsAmount);
         tvFoodCount = view.findViewById(R.id.tvFoodAmount);
         btnSignOut = view.findViewById(R.id.btnSignOut);
+        btnCapture = view.findViewById(R.id.btnCapture);
 
         tvFoodCount.setText("Restaurants: " + ParseUser.getCurrentUser().getList("restaurants").size());
         tvFriendCount.setText("Friends: " + ParseUser.getCurrentUser().getList("friends").size());
@@ -52,6 +55,14 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 ParseUser.logOut();
                 goLogoutActivity();
+            }
+        });
+
+        btnCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), CaptureActivity.class);
+                startActivity(i);
             }
         });
     }
