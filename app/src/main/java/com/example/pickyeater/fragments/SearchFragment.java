@@ -1,5 +1,7 @@
 package com.example.pickyeater.fragments;
 
+import android.app.Activity;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,10 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyboardShortcutGroup;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -79,6 +83,7 @@ public class SearchFragment extends Fragment {
                 if (!etSearch.getText().toString().isEmpty()){
                     fillView(etSearch.getText().toString());
                     etSearch.setText("");
+                    ((InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
             }
         });
