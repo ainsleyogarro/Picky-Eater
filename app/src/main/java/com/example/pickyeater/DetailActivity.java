@@ -88,7 +88,11 @@ public class DetailActivity extends AppCompatActivity {
                 JSONObject restaurant = json.jsonObject;
                 try {
                     tvTitle.setText(restaurant.getString("name"));
-                    tvAddress.setText(restaurant.getJSONObject("location").getString("display_address"));
+                    JSONArray address = restaurant.getJSONObject("location").getJSONArray("display_address");
+                    for (int i = 0; i <address.length() ; i++) {
+                        tvAddress.setText(tvAddress.getText() + address.getString(i) + "\n");
+                    }
+
                     rbRestaurant.setNumStars(((int) restaurant.getDouble("rating")));
                     Glide.with(getApplicationContext()).load(restaurant.optString("image_url")).into(ivRestaurant);
                     JSONArray hours = restaurant.getJSONArray("hours").getJSONObject(0).getJSONArray("open");
