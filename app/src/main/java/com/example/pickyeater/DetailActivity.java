@@ -74,6 +74,7 @@ public class DetailActivity extends AppCompatActivity {
         String apiUrl = "https://api.yelp.com/v3/businesses/" +  currrentRestaurant.getId();
         RequestParams params = new RequestParams();
 
+
         btnAddRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +82,8 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+
+        // Gets website and binds data to view
         client.get(apiUrl, authorization, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {

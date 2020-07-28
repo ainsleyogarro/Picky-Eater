@@ -1,6 +1,5 @@
 package com.example.pickyeater;
 
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -19,8 +18,6 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-import kotlin.jvm.internal.MagicApiIntrinsics;
-
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.ViewHolder> {
     Context context;
     List<Restaurant> restaurants;
@@ -34,7 +31,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_restaurant, parent, false);
         return new ViewHolder(view);
     }
 

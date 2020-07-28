@@ -3,11 +3,13 @@ package com.example.pickyeater;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -21,16 +23,20 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPassword;
     private Button btnSignIn;
     private Button btnSignUp;
-
+private TextView tvLoginTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.White)));
+        getSupportActionBar().hide();
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnSignIn = findViewById(R.id.btnSignIn);
         btnSignUp = findViewById(R.id.btnRegister);
+        tvLoginTitle = findViewById(R.id.tvAppTitle);
+
 
 
         if (ParseUser.getCurrentUser() != null){

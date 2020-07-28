@@ -4,36 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/LightPink"
     tools:context=".LoginActivity">
 
+
+    <TextView
+        android:id="@+id/tvAppTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/vertigo"
+        android:text="Picky Eater"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/FloralWhite"
+        android:textSize="40dp" />
+
     <EditText
+        android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAppTitle"
+        android:layout_centerHorizontal="false"
+        android:layout_marginTop="81dp"
+        android:background="@null"
+        android:fontFamily="@font/vertigo"
+        android:gravity="center"
         android:hint="Username"
-        android:id="@+id/etUsername"/>
+        android:textColor="@color/White"
+        android:textColorHint="@color/White"
+        android:textSize="24sp" />
 
     <EditText
+        android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
         android:layout_below="@id/etUsername"
+        android:layout_marginTop="22dp"
+        android:background="@null"
+        android:fontFamily="@font/vertigo"
+        android:gravity="center"
+        android:hint="Password"
         android:inputType="textPassword"
-        android:id="@+id/etPassword"/>
+        android:textColor="@color/White"
+        android:textColorHint="@color/White"
+        android:textSize="24sp" />
 
     <Button
-        android:layout_width="match_parent"
+        android:id="@+id/btnSignIn"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:text="Sign In"
         android:layout_below="@+id/etPassword"
-        android:id="@+id/btnSignIn"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp"
+        android:background="@drawable/roundbutton"
+        android:fontFamily="@font/vertigo"
+        android:text="Sign In"
+        android:textSize="24sp" />
 
     <Button
-        android:layout_width="match_parent"
+        android:id="@+id/btnRegister"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:text="Register"
         android:layout_below="@+id/btnSignIn"
-        android:id="@+id/btnRegister"/>
-
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/roundbutton"
+        android:backgroundTint="@color/LightGreen"
+        android:fontFamily="@font/vertigo"
+        android:text="Register"
+        android:textSize="24sp" />
 
 
 </RelativeLayout>

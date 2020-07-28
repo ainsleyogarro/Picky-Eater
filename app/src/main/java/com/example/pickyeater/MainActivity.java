@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.opengl.Visibility;
 import android.os.Bundle;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.Window;
 
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
+        //getWindow().setEnterTransition(getResources().getAnimation(R.transition.));
 
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
