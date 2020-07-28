@@ -50,6 +50,8 @@
 * (Real Stretch) Offline availability
 * Materials Design
 * User can delete account
+* User can pick their favorite restaurant that shows on their profile
+* User can pick between fusion, combination, exclusion
 
 
 ### 2. Screen Archetypes
