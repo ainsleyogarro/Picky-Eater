@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.KeyboardShortcutGroup;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,25 @@ public class SearchFragment extends Fragment {
 
         etSearch = view.findViewById(R.id.etSearch);
         btnSearch = view.findViewById(R.id.btnSearch);
+
+
+        // Searches on Enter Key
+        etSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+                if(keyEvent.getAction() == KeyEvent.ACTION_DOWN){
+                    if ((i == KeyEvent.KEYCODE_ENTER || i == KeyEvent.KEYCODE_DPAD_CENTER) && !etSearch.getText().toString().isEmpty()){
+                        fillView(etSearch.getText().toString());
+                        etSearch.setText("");
+                        ((InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        });
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
