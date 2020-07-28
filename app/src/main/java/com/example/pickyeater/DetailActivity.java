@@ -93,7 +93,7 @@ public class DetailActivity extends AppCompatActivity {
                         tvAddress.setText(tvAddress.getText() + address.getString(i) + "\n");
                     }
 
-                    rbRestaurant.setNumStars(((int) restaurant.getDouble("rating")));
+                    rbRestaurant.setNumStars((int) Math.round(restaurant.getDouble("rating")));
                     Glide.with(getApplicationContext()).load(restaurant.optString("image_url")).into(ivRestaurant);
                     JSONArray hours = restaurant.getJSONArray("hours").getJSONObject(0).getJSONArray("open");
                     for (int i = 0; i < hours.length() ; i++) {

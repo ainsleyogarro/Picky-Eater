@@ -14,19 +14,23 @@
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rvRestaurantsSearch"
+
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_marginTop="0dp"
-        android:hint="Location"/>
+        android:layout_marginBottom="50dp"
+        android:hint="Location" />
 
     <Button
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rvRestaurantsSearch"
+
+        android:layout_alignRight="@id/etSearch"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_marginTop="0dp"
-        android:layout_alignRight="@id/etSearch"
+        android:layout_marginBottom="50dp"
         android:text="Search" />
 
 
