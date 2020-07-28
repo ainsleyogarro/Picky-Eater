@@ -53,6 +53,8 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        getSupportActionBar().hide();
+
        ivRestaurant = findViewById(R.id.ivRestaurantDetail);
        tvTitle = findViewById(R.id.tvTitleDetail);
        tvAddress = findViewById(R.id.tvAddressDetail);
