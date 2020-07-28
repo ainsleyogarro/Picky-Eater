@@ -37,7 +37,6 @@ import java.util.List;
 import okhttp3.Headers;
 
 public class DetailActivity extends AppCompatActivity {
-    private static final String REST_CONSUMER_SECRET = "SBsaWidRTfoXuVxS04YZE74ExQNX_cmIgNZTz2CH01W_BonLGCy1B0QTCTbkI_6aqvOWk4rG1hEpn2fbPWTHK3JrzleQAkQxcjni5HH48VaGAsga3LZuDkJ4rrMMX3Yx";
     private ImageView ivRestaurant;
     private TextView tvTitle;
     private TextView tvAddress;
@@ -68,7 +67,7 @@ public class DetailActivity extends AppCompatActivity {
         AsyncHttpClient client = new AsyncHttpClient();
 
         RequestHeaders authorization = new RequestHeaders();
-        authorization.put("Authorization", "Bearer " + REST_CONSUMER_SECRET);
+        authorization.put("Authorization", "Bearer " + getResources().getString(R.string.rest_secret));
 
         final Restaurant currrentRestaurant = Parcels.unwrap(getIntent().getParcelableExtra("restaurant"));
 
@@ -93,7 +92,7 @@ public class DetailActivity extends AppCompatActivity {
                         tvAddress.setText(tvAddress.getText() + address.getString(i) + "\n");
                     }
 
-                    rbRestaurant.setNumStars((int) Math.round(restaurant.getDouble("rating")));
+                    rbRestaurant.setNumStars( (int) Math.round(restaurant.getDouble("rating")));
                     Glide.with(getApplicationContext()).load(restaurant.optString("image_url")).into(ivRestaurant);
                     JSONArray hours = restaurant.getJSONArray("hours").getJSONObject(0).getJSONArray("open");
                     for (int i = 0; i < hours.length() ; i++) {
@@ -107,7 +106,7 @@ public class DetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
+                Log.i(TAG, "Json request failed", throwable);
             }
         });
     }

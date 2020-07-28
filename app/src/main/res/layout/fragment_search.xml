@@ -7,8 +7,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRestaurantsSearch"
-        android:layout_width="521dp"
-        android:layout_height="564dp" />
+        android:layout_width="match_parent"
+        android:layout_height="637dp"
+        android:layout_above="@+id/etSearch"
+        android:layout_marginBottom="0dp" />
 
     <EditText
         android:id="@+id/etSearch"
@@ -26,10 +28,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
+        android:layout_below="@+id/rvRestaurantsSearch"
         android:layout_alignRight="@id/etSearch"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="-3dp"
         android:layout_marginBottom="50dp"
         android:text="Search" />
 

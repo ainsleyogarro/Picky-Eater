@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -41,7 +42,12 @@ public class CaptureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_capture);
+
+
+
         btnTakePic = findViewById(R.id.btnCaptureImage);
         btnSavePic = findViewById(R.id.btnSetPic);
         ivPostPic = findViewById(R.id.ivPostImage);

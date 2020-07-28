@@ -26,7 +26,6 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity {
 
     private ImageView ivProfilePic;
-    private Button btnFusion;
     private RecyclerView rvFriendRestaurantList;
     private RestaurantsAdapter adapter;
     private List<Restaurant> restaurants;
@@ -42,7 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
         ParseUser profile = Parcels.unwrap(getIntent().getParcelableExtra("user"));
 
         ivProfilePic = findViewById(R.id.ivProfileActivityPic);
-        btnFusion = findViewById(R.id.btnFusion);
         rvFriendRestaurantList = findViewById(R.id.rvProfileLists);
         rgListOptions = findViewById(R.id.rgListOptions);
 
@@ -70,7 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
         rvFriendRestaurantList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rvFriendRestaurantList.setAdapter(adapter);
         
-        
+
 
     }
 

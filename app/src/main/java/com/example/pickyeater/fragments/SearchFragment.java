@@ -37,7 +37,6 @@ import okhttp3.Headers;
 
 public class SearchFragment extends Fragment {
 
-    private static final String REST_CONSUMER_SECRET = "SBsaWidRTfoXuVxS04YZE74ExQNX_cmIgNZTz2CH01W_BonLGCy1B0QTCTbkI_6aqvOWk4rG1hEpn2fbPWTHK3JrzleQAkQxcjni5HH48VaGAsga3LZuDkJ4rrMMX3Yx";
     private static final String TAG = "SearchFragment";
     private ArrayList<Restaurant> restaurants;
     private RecyclerView rvSearch;
@@ -92,7 +91,7 @@ public class SearchFragment extends Fragment {
 
 
             RequestHeaders authorization = new RequestHeaders();
-            authorization.put("Authorization", "Bearer " + REST_CONSUMER_SECRET);
+            authorization.put("Authorization", "Bearer " + getResources().getString(R.string.rest_secret));
 
             adapter.clear();
             String apiUrl = "https://api.yelp.com/v3/businesses/search";

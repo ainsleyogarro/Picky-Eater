@@ -1,5 +1,6 @@
 package com.example.pickyeater;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import com.example.pickyeater.models.Restaurant;
 import org.parceler.Parcels;
 
 import java.util.List;
+
+import kotlin.jvm.internal.MagicApiIntrinsics;
 
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.ViewHolder> {
     Context context;
@@ -78,6 +81,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
                     intent.putExtra("restaurant", Parcels.wrap(restaurants.get(getAdapterPosition())));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                     context.startActivity(intent);
+
                 }
             });
         }
