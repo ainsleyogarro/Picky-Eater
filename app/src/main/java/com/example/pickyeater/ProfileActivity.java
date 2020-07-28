@@ -18,6 +18,7 @@ import com.parse.ParseUser;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -80,39 +81,29 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void FuseLists() throws ParseException {
+        HashMap<String, Restaurant> HashRestaurants = new HashMap<String, Restaurant>();
+
         ArrayList<Restaurant> fuseRestaurants = new ArrayList();
-        ArrayList<String> myRestaurantIDs  = new ArrayList();
-        ArrayList<Restaurant> myRestaurants = new ArrayList<>();
+        
         List<ParseRestaurant> myParseRestaurants = ParseUser.getCurrentUser().getList("restaurants");
         if (myParseRestaurants == null){
             myParseRestaurants = new ArrayList<>();
         }
         for (ParseRestaurant myParseRestaurant:
              myParseRestaurants) {
-            myRestaurantIDs.add(myParseRestaurant.getKeyId());
-            myRestaurants.add(new Restaurant(myParseRestaurant));
-        }
 
-        // Used if myRestaurants is smaller to save time
-        if (myRestaurants.size() < restaurants.size()){
-            for (int i = 0; i < myRestaurants.size(); i++) {
-                    if (restaurantIDs.contains(myRestaurantIDs.get(i))){
-                        fuseRestaurants.add(myRestaurants.get(i));
-                    }
-
-            }
+            HashRestaurants.put(myParseRestaurant.getKeyId(),new Restaurant(myParseRestaurant));
 
         }
 
-        // Used if Restaurants is smaller to save time
-        else{
+
             for (int i = 0; i < restaurants.size(); i++) {
-                if (myRestaurantIDs.contains(restaurantIDs.get(i))){
+                if (HashRestaurants.containsKey(restaurants.get(i).getId())){
                     fuseRestaurants.add(restaurants.get(i));
                 }
 
             }
-        }
+
 
         adapter = new RestaurantsAdapter(getApplicationContext(), fuseRestaurants);
         rvFriendRestaurantList.setAdapter(adapter);
