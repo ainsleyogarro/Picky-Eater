@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setBackgroundColor(getResources().getColor(R.color.WhiteSmoke));;
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

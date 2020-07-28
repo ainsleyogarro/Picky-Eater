@@ -15,12 +15,13 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
+        android:id="@+id/tvFriendsAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivProfileFragPic"
         android:layout_marginTop="8dp"
-        android:id="@+id/tvFriendsAmount"
-        />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="24sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,6 +29,8 @@
         android:layout_below="@+id/tvFriendsAmount"
         android:layout_marginTop="8dp"
         android:id="@+id/tvFoodAmount"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="24sp"
         />
 
     <Button
