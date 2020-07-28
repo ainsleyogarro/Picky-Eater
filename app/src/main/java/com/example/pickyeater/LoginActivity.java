@@ -2,11 +2,16 @@ package com.example.pickyeater;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,6 +42,7 @@ private TextView tvLoginTitle;
         btnSignUp = findViewById(R.id.btnRegister);
         tvLoginTitle = findViewById(R.id.tvAppTitle);
 
+        //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
 
 
         if (ParseUser.getCurrentUser() != null){
@@ -89,7 +95,7 @@ private TextView tvLoginTitle;
                     return;
                 }
 
-                goMainActivity();
+                startMainActivity();
             }
         });
     }
@@ -98,4 +104,12 @@ private TextView tvLoginTitle;
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
+
+    // Use animation when login
+    private void startMainActivity(){
+        Intent i = new Intent(this, MainActivity.class);
+        getWindow().setExitTransition(new Slide());
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
 }

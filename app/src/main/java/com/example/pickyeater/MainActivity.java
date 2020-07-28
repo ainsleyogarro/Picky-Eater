@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.transition.Visibility;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
