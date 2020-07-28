@@ -14,18 +14,53 @@
         android:layout_centerHorizontal="true"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/btnFusion"
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/rgListOptions"
         android:layout_below="@+id/ivProfileActivityPic"
-        android:layout_centerHorizontal="true"
-        android:text="Button" />
+        android:orientation="horizontal"
+        >
+        <RadioButton
+            android:id="@+id/btnOriginal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="originalLists"
+            android:checked="true"
+            android:text="Original" />
+        <RadioButton
+            android:id="@+id/btnFusion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="FuseLists"
+            android:text="Fuse" />
+        <RadioButton
+            android:id="@+id/btnCombine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="CombineLists"
+            android:text="Combine" />
+        <RadioButton
+            android:id="@+id/btnExclusive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="ExclusiveList"
+            android:text="Exclusive" />
 
+
+
+
+    </RadioGroup>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnFusion"
+        android:layout_below="@+id/rgListOptions"
         android:id="@+id/rvProfileLists" />
+
+
 
 </RelativeLayout>

@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.RadialGradient;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.pickyeater.models.ParseRestaurant;
@@ -30,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     private List<Restaurant> restaurants;
     private List<ParseRestaurant> parseRestaurants;
     private List<String> restaurantIDs;
+    private RadioGroup rgListOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         ivProfilePic = findViewById(R.id.ivProfileActivityPic);
         btnFusion = findViewById(R.id.btnFusion);
         rvFriendRestaurantList = findViewById(R.id.rvProfileLists);
-
+        rgListOptions = findViewById(R.id.rgListOptions);
 
         restaurantIDs = new ArrayList<>();
         Glide.with(getApplicationContext()).load(profile.getParseFile("Picture").getUrl()).into(ivProfilePic);
@@ -67,46 +70,115 @@ public class ProfileActivity extends AppCompatActivity {
         rvFriendRestaurantList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rvFriendRestaurantList.setAdapter(adapter);
         
-        btnFusion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    FuseLists();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        
 
     }
 
-    private void FuseLists() throws ParseException {
+
+
+    public void FuseLists(View view) throws ParseException {
         HashMap<String, Restaurant> HashRestaurants = new HashMap<String, Restaurant>();
 
         ArrayList<Restaurant> fuseRestaurants = new ArrayList();
-        
+
         List<ParseRestaurant> myParseRestaurants = ParseUser.getCurrentUser().getList("restaurants");
         if (myParseRestaurants == null){
             myParseRestaurants = new ArrayList<>();
         }
         for (ParseRestaurant myParseRestaurant:
-             myParseRestaurants) {
+                myParseRestaurants) {
 
             HashRestaurants.put(myParseRestaurant.getKeyId(),new Restaurant(myParseRestaurant));
 
         }
 
 
-            for (int i = 0; i < restaurants.size(); i++) {
-                if (HashRestaurants.containsKey(restaurants.get(i).getId())){
-                    fuseRestaurants.add(restaurants.get(i));
-                }
-
+        for (int i = 0; i < restaurants.size(); i++) {
+            if (HashRestaurants.containsKey(restaurants.get(i).getId())){
+                fuseRestaurants.add(restaurants.get(i));
             }
+
+        }
 
 
         adapter = new RestaurantsAdapter(getApplicationContext(), fuseRestaurants);
         rvFriendRestaurantList.setAdapter(adapter);
+    }
+
+
+    public void originalLists(View view) {
+
+        adapter.clear();
+        adapter.addAll(restaurants);
+
+    }
+
+    // Sets view to restaurant list that include all restaurants between user and friend
+
+    public void CombineLists(View view) throws ParseException {
+
+        HashMap<String, Restaurant> HashRestaurants = new HashMap<String, Restaurant>();
+
+        ArrayList<Restaurant> fuseRestaurants = new ArrayList();
+        ArrayList<Restaurant> myRestaurants = new ArrayList<>();
+
+        List<ParseRestaurant> myParseRestaurants = ParseUser.getCurrentUser().getList("restaurants");
+        if (myParseRestaurants == null){
+            myParseRestaurants = new ArrayList<>();
+        }
+        for (ParseRestaurant myParseRestaurant:
+                myParseRestaurants) {
+            myRestaurants.add(new Restaurant(myParseRestaurant));
+
+        }
+        fuseRestaurants.addAll(restaurants);
+
+
+        for (int i = 0; i < restaurants.size(); i++) {
+           HashRestaurants.put(restaurants.get(i).getId(), restaurants.get(i));
+
+        }
+
+        for (int i = 0; i < myRestaurants.size(); i++) {
+            if (!HashRestaurants.containsKey(myRestaurants.get(i).getId())){
+                fuseRestaurants.add(myRestaurants.get(i));
+            }
+        }
+
+
+        adapter.clear();
+        adapter.addAll(fuseRestaurants);
+    }
+
+    // Exclusive List that show restaurant list that the friend has but you do not
+
+    public void ExclusiveList(View view) throws ParseException {
+        HashMap<String, Restaurant> HashRestaurants = new HashMap<String, Restaurant>();
+
+        ArrayList<Restaurant> fuseRestaurants = new ArrayList();
+        ArrayList<Restaurant> myRestaurants = new ArrayList<>();
+
+        List<ParseRestaurant> myParseRestaurants = ParseUser.getCurrentUser().getList("restaurants");
+        if (myParseRestaurants == null){
+            myParseRestaurants = new ArrayList<>();
+        }
+        for (ParseRestaurant myParseRestaurant:
+                myParseRestaurants) {
+            HashRestaurants.put(myParseRestaurant.getKeyId(),new Restaurant(myParseRestaurant));
+
+        }
+
+
+        for (int i = 0; i < restaurants.size(); i++) {
+            if (!HashRestaurants.containsKey(restaurants.get(i).getId())){
+                fuseRestaurants.add(restaurants.get(i));
+            }
+        }
+
+
+        adapter.clear();
+        adapter.addAll(fuseRestaurants);
+
 
     }
 }
