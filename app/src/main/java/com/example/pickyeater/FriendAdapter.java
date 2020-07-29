@@ -3,17 +3,21 @@ package com.example.pickyeater;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -41,6 +45,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupRemoveView = inflater.inflate(R.layout.removefriend_popup, null);
+
+        popUp = new PopupWindow(popupRemoveView, 1000, 1000, true);
         View view = LayoutInflater.from(context).inflate(R.layout.item_friend, parent, false);
         return new FriendAdapter.ViewHolder(view);
     }
@@ -61,7 +69,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         ImageView ivProfilePicture;
         TextView tvUsername;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             ivProfilePicture = itemView.findViewById(R.id.ivProfilePic);
             tvUsername = itemView.findViewById(R.id.tvUsername);
@@ -74,11 +82,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 }
             });
             itemView.setOnTouchListener(new View.OnTouchListener() {
+                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_MOVE){
-                        //popUp = new PopupWindow(context);
-                        //popUp.setContentView(R.layout.removefriend_popup);
+                    if (motionEvent.getAction() == MotionEvent.ACTION_MOVE && !popUp.isShowing()){
+                        startPopUp();
+
+
+                        //popUp.setContentView(View.inflate(context, R.layout.removefriend_popup, itemView.getRootView().g);
                         //Intent i = new Intent(context, RemoveFriend.class);
                         //context.startActivity(i);
                         //Toast.makeText(context, "Ta", Toast.LENGTH_SHORT).show();
@@ -86,7 +97,28 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                     }
                     return false;
                 }
+
+                private void startPopUp() {
+
+                    popUp.setFocusable(true);
+                    popUp.setOutsideTouchable(false);
+                    popUp.showAsDropDown(itemView,0,0);
+
+
+                    Button btnCancel = popUp.getContentView().findViewById(R.id.btnPopUpFriendCancel);
+
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            popUp.dismiss();
+                        }
+                    });
+                }
             });
+
+
+
 
         }
 
@@ -103,4 +135,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             }
         }
     }
+
+
 }
