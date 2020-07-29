@@ -89,6 +89,8 @@ public class FriendsFragment extends Fragment {
             }
         }
 
+
+        // Add friends with enter button
         etFriends.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -115,6 +117,8 @@ public class FriendsFragment extends Fragment {
             }
 
         });
+
+        // Add friend with enter key
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

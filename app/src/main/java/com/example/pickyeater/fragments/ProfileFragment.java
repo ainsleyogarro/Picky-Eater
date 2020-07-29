@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvFriendCount;
     private TextView tvFoodCount;
     private Button btnSignOut;
-    private Button btnCapture;
+    private ImageButton btnCapture;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

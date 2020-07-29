@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -32,8 +33,8 @@ import java.io.IOException;
 
 public class CaptureActivity extends AppCompatActivity {
     
-    private Button btnTakePic;
-    private Button btnSavePic;
+    private ImageButton btnTakePic;
+    private ImageButton btnSavePic;
     private ImageView ivPostPic;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public static final String TAG = "CaptureActivity";
@@ -49,8 +50,7 @@ public class CaptureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_capture);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Crimson)));
-
+        actionBar.hide();
 
 
 

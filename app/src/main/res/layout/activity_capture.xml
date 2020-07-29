@@ -8,25 +8,26 @@
     android:orientation="vertical">
 
 
-
-    <Button
+    <ImageButton
+        android:id="@+id/btnCaptureImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnCaptureImage"
-        android:text="Take Picture"/>
+        android:layout_marginTop="100dp"
+        android:src="@android:drawable/ic_menu_camera"
+        android:text="Take Picture" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
         android:id="@+id/ivPostImage"
-        tools:srcCompat = "@tools:sample/avatars"/>
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
+    <ImageButton
+        android:id="@+id/btnSetPic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set as profile picture"
-        android:id="@+id/btnSetPic"/>
-
+        android:src="@android:drawable/ic_menu_upload"
+        android:text="Set as profile picture" />
 
 
 </LinearLayout>

@@ -61,6 +61,16 @@ public class MainActivity extends AppCompatActivity {
 
         //getWindow().setEnterTransition(getResources().getAnimation(R.transition.));
 
+        ParseUser curr = ParseUser.getCurrentUser();
+
+        if(curr.getList("friends") == null){
+            curr.put("friends", new ArrayList());
+        }
+
+        if(curr.getList("restaurants") == null){
+            curr.put("restaurants", new ArrayList());
+        }
+
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setBackgroundColor(getResources().getColor(R.color.White));
