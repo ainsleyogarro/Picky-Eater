@@ -13,6 +13,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -45,6 +48,7 @@ public class CaptureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setEnterTransition(new Fade());
 
 
         setContentView(R.layout.activity_capture);

@@ -1,5 +1,6 @@
 package com.example.pickyeater.fragments;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -63,7 +64,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), CaptureActivity.class);
-                startActivity(i);
+                startActivity(i, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });
     }
