@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -98,7 +99,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                     return false;
                 }
 
+                @RequiresApi(api = Build.VERSION_CODES.M)
                 private void startPopUp() {
+
+
 
                     popUp.setFocusable(true);
                     popUp.setOutsideTouchable(false);
@@ -106,11 +110,21 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
 
                     Button btnCancel = popUp.getContentView().findViewById(R.id.btnPopUpFriendCancel);
+                    Button btnRemove = popUp.getContentView().findViewById(R.id.btnPopupFriendRemove);
 
                     btnCancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
+                            popUp.dismiss();
+                        }
+                    });
+
+                    btnRemove.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            friends.remove(getAdapterPosition());
+                            ParseUser.getCurrentUser().put("friends", friends);
                             popUp.dismiss();
                         }
                     });
