@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailActivity"
+    android:background="@color/LightPink"
      >
 
 
@@ -18,13 +19,17 @@
         android:id="@+id/tvTitleDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ivRestaurantDetail"/>
+        android:layout_below="@id/ivRestaurantDetail"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:textColor="@color/Black"/>
 
     <TextView
         android:id="@+id/tvAddressDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvTitleDetail"/>
+        android:layout_below="@id/tvTitleDetail"
+        android:textColor="@color/Black"/>
 
     <RatingBar
         android:layout_width="wrap_content"
@@ -33,21 +38,26 @@
         android:numStars="5"
         android:stepSize=".5"
         android:layout_centerVertical="true"
-        android:layout_below="@id/tvAddressDetail"/>
+        android:layout_below="@id/tvAddressDetail"
+        />
 
     <TextView
         android:id="@+id/tvHours"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rbRestaurant" />
+        android:layout_below="@id/rbRestaurant"
+        android:textColor="@color/Black"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add/Remove"
         android:id="@+id/btnAddRemove"
-        android:layout_below="@+id/tvHours"/>
-
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvHours"
+        android:background="@color/Crimson"
+        android:src="@drawable/profile_icon"
+        android:text="Add/Remove"
+        android:textColor="@color/White"
+        tools:src="@drawable/addremove" />
 
 
 </RelativeLayout>

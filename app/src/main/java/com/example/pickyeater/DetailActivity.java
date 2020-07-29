@@ -98,6 +98,7 @@ public class DetailActivity extends AppCompatActivity {
                     }
 
                     rbRestaurant.setNumStars( (int) Math.round(restaurant.getDouble("rating")));
+                    rbRestaurant.getProgressDrawable().setTint(getResources().getColor(R.color.Gold));
                     Glide.with(getApplicationContext()).load(restaurant.optString("image_url")).into(ivRestaurant);
                     JSONArray hours = restaurant.getJSONArray("hours").getJSONObject(0).getJSONArray("open");
                     for (int i = 0; i < hours.length() ; i++) {

@@ -30,6 +30,7 @@ import com.example.pickyeater.fragments.SearchFragment;
 import com.example.pickyeater.models.Restaurant;
 import com.github.scribejava.core.model.OAuthRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //getSupportActionBar().collapseActionView();
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(ParseUser.getCurrentUser().getUsername());
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Crimson)));
 
 
