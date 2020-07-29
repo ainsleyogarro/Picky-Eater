@@ -1,5 +1,6 @@
 package com.example.pickyeater.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,9 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -86,7 +89,32 @@ public class FriendsFragment extends Fragment {
             }
         }
 
+        etFriends.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(keyEvent.getAction() == KeyEvent.ACTION_DOWN){
+                    if ((i == KeyEvent.KEYCODE_ENTER || i == KeyEvent.KEYCODE_DPAD_CENTER) && !etFriends.getText().toString().isEmpty()){
+                        try {
+                            ParseUser friend = QueryUser(etFriends.getText().toString());
+                            addUser(friend);
+                            Log.i(TAG,friends.size() + "");
+                            etFriends.setText("");
+                            //friends.add(friend);
+                            //usernames.add(friend.getUsername());
+                            return true;
+                        } catch (ParseException e) {
+                            Toast.makeText(getContext(), "User cannot be found", Toast.LENGTH_SHORT);
+                            Log.e(TAG, "Issue with adding friend", e);
+                        }
+                        ((InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 
+                    }
+                }
+
+                return false;
+            }
+
+        });
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +131,7 @@ public class FriendsFragment extends Fragment {
                         Log.e(TAG, "Issue with adding friend", e);
                         Toast.makeText(getContext(), "User cannot be found", Toast.LENGTH_SHORT);
                     }
+                    ((InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 
 
                 }

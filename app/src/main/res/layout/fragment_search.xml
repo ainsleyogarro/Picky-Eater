@@ -21,7 +21,9 @@
         android:layout_gravity="bottom"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="50dp"
-        android:hint="Location" />
+        android:hint="Location"
+        android:inputType="text"
+        android:imeOptions="actionSearch"/>
 
     <Button
         android:id="@+id/btnSearch"
