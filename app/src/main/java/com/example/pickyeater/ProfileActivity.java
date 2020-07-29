@@ -1,10 +1,12 @@
 package com.example.pickyeater;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.RadialGradient;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,7 +40,11 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        ActionBar actionBar = getSupportActionBar();
         ParseUser profile = Parcels.unwrap(getIntent().getParcelableExtra("user"));
+
+        actionBar.setTitle(profile.getUsername());
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Crimson)));
 
         ivProfilePic = findViewById(R.id.ivProfileActivityPic);
         rvFriendRestaurantList = findViewById(R.id.rvProfileLists);
