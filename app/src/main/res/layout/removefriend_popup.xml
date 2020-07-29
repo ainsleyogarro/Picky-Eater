@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="100dp">
 
 
     <TextView
@@ -9,6 +9,7 @@
         android:text="Are you sure you want to remove this Friend?"
         android:layout_centerHorizontal="true"
         android:id="@+id/tvPopupFriend"
+        android:textColor="@color/Black"
         />
 
     <Button
@@ -20,7 +21,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="63dp"
         android:layout_marginTop="7dp"
-        android:text="Remove" />
+        android:text="Remove"
+        android:background="@color/Red"/>
 
     <Button
         android:id="@+id/btnPopUpFriendCancel"
@@ -32,5 +34,6 @@
         android:layout_marginTop="7dp"
         android:layout_toEndOf="@+id/btnPopupFriendRemove"
         android:onClick="dropPopUp"
-        android:text="Cancel" />
+        android:text="Cancel"
+        android:background="@color/Green"/>
 </RelativeLayout>

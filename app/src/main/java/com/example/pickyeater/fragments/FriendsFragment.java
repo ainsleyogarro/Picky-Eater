@@ -65,6 +65,7 @@ public class FriendsFragment extends Fragment {
         etFriends = view.findViewById(R.id.etFriends);
         btnAdd =  view.findViewById(R.id.btnFriend);
         rvFriend = view.findViewById(R.id.rvFriends);
+        rvFriend.setVisibility(View.VISIBLE);
 
 
         friends = ParseUser.getCurrentUser().getList("friends");

@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.FriendsFragment"
-    android:id="@+id/fragmentFriends">
+    android:id="@+id/fragmentFriends"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFriends"
         android:layout_width="match_parent"
-        android:layout_height="564dp" />
+        android:layout_height="564dp"
+        />
 
     <EditText
         android:id="@+id/etFriends"

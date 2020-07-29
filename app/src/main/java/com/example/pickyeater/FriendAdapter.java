@@ -3,6 +3,7 @@ package com.example.pickyeater;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
@@ -83,53 +84,61 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 }
             });
             itemView.setOnTouchListener(new View.OnTouchListener() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
+
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_MOVE && !popUp.isShowing()){
+                    if (motionEvent.getAction() == MotionEvent.ACTION_MOVE && !popUp.isShowing()) {
                         startPopUp();
 
 
-                        //popUp.setContentView(View.inflate(context, R.layout.removefriend_popup, itemView.getRootView().g);
-                        //Intent i = new Intent(context, RemoveFriend.class);
-                        //context.startActivity(i);
-                        //Toast.makeText(context, "Ta", Toast.LENGTH_SHORT).show();
                         return true;
                     }
                     return false;
                 }
-
-                @RequiresApi(api = Build.VERSION_CODES.M)
-                private void startPopUp() {
+            });
 
 
 
-                    popUp.setFocusable(true);
-                    popUp.setOutsideTouchable(false);
-                    popUp.showAsDropDown(itemView,0,0);
+            }
 
+        private void startPopUp() {
 
-                    Button btnCancel = popUp.getContentView().findViewById(R.id.btnPopUpFriendCancel);
-                    Button btnRemove = popUp.getContentView().findViewById(R.id.btnPopupFriendRemove);
+            final RecyclerView rvFriend = itemView.getRootView().findViewById(R.id.rvFriends);
+            rvFriend.setVisibility(View.INVISIBLE);
 
-                    btnCancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            popUp.dismiss();
-                        }
-                    });
-
-                    btnRemove.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            friends.remove(getAdapterPosition());
-                            ParseUser.getCurrentUser().put("friends", friends);
-                            popUp.dismiss();
-                        }
-                    });
+            popUp.setFocusable(true);
+            popUp.setOutsideTouchable(false);
+            popUp.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    rvFriend.setVisibility(View.VISIBLE);
                 }
             });
+            popUp.showAtLocation(itemView, Gravity.CENTER, 0, 0);
+
+
+            Button btnCancel = popUp.getContentView().findViewById(R.id.btnPopUpFriendCancel);
+            Button btnRemove = popUp.getContentView().findViewById(R.id.btnPopupFriendRemove);
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    popUp.dismiss();
+
+                }
+            });
+
+            btnRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    friends.remove(getAdapterPosition());
+                    ParseUser.getCurrentUser().put("friends", friends);
+                    popUp.dismiss();
+
+                }
+        });
+
 
 
 
