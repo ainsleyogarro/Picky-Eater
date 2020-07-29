@@ -48,8 +48,8 @@ public class ProfileFragment extends Fragment {
         btnSignOut = view.findViewById(R.id.btnSignOut);
         btnCapture = view.findViewById(R.id.btnCapture);
 
-        tvFoodCount.setText("Restaurants: " + ParseUser.getCurrentUser().getList("restaurants").size());
-        tvFriendCount.setText("Friends: " + ParseUser.getCurrentUser().getList("friends").size());
+        tvFoodCount.setText("" + ParseUser.getCurrentUser().getList("restaurants").size());
+        tvFriendCount.setText("" + ParseUser.getCurrentUser().getList("friends").size());
         Glide.with(getContext()).load(ParseUser.getCurrentUser().getParseFile("Picture").getUrl()).into(ivProfileFragPicture);
 
         btnSignOut.setOnClickListener(new View.OnClickListener() {

@@ -9,35 +9,57 @@
 
     <ImageView
         android:id="@+id/ivProfileFragPic"
-        android:layout_width="270dp"
-        android:layout_height="225dp"
+        android:layout_width="230dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/ivRestaurantIcon"
         android:layout_centerHorizontal="true"
         tools:src="@tools:sample/avatars" />
+
+
+    <ImageView
+        android:id="@+id/ivFriendIcon"
+        android:layout_width="126dp"
+        android:layout_height="66dp"
+
+        app:srcCompat="@drawable/red_friends"
+        tools:srcCompat="@drawable/red_friends" />
 
     <TextView
         android:id="@+id/tvFriendsAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivProfileFragPic"
+        android:layout_toEndOf="@id/ivFriendIcon"
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp" />
 
+    <ImageView
+        android:id="@+id/ivRestaurantIcon"
+        android:layout_width="126dp"
+        android:layout_height="66dp"
+        android:layout_below="@id/ivFriendIcon"
+
+        app:srcCompat="@drawable/red_food" />
+
     <TextView
+        android:id="@+id/tvFoodAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvFriendsAmount"
-        android:layout_marginTop="8dp"
-        android:id="@+id/tvFoodAmount"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginBottom="-42dp"
+        android:layout_toEndOf="@+id/ivRestaurantIcon"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="24sp"
-        />
+        android:textSize="24sp" />
 
     <ImageButton
         android:id="@+id/btnCapture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvFoodAmount"
+        android:layout_below="@+id/ivProfileFragPic"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:background="@color/White"
@@ -47,8 +69,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnCapture"
+        android:layout_marginBottom="50dp"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:text="Sign Out"
         android:id="@+id/btnSignOut"/>
 
