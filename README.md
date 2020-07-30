@@ -32,7 +32,7 @@
 * User has a profile picture on theri profile view
 * User can see their friends and their friend's list
 * Registration for new users
-* Double tap to add restaurant
+* Can swipe user to delete friend
 * Uses algorithm for combining lists with friends list
 * Fade in restaurant detail view
 * Can take restaurant from friend list and put it on their own
@@ -49,6 +49,7 @@
 * Add a party function (for groups larger than 2)
 * (Real Stretch) Offline availability
 * Materials Design
+* Double tap to add restaurant
 * User can delete account
 * User can pick their favorite restaurant that shows on their profile
 * User can pick between fusion, combination, exclusion
