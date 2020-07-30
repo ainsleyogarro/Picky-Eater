@@ -134,6 +134,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 public void onClick(View view) {
                     friends.remove(getAdapterPosition());
                     ParseUser.getCurrentUser().put("friends", friends);
+                    ParseUser.getCurrentUser().saveInBackground();
                     popUp.dismiss();
 
                 }
