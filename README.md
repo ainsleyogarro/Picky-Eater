@@ -34,7 +34,7 @@
 * Registration for new users
 * Can swipe user to delete friend
 * Uses algorithm for combining lists with friends list
-* Fade in restaurant detail view
+* Use animation from login to main activity and to caputre activity
 * Can take restaurant from friend list and put it on their own
 * Restaurant has detail view
 * Setup bottom button navigation for list view , search view, profile, and friends view
@@ -51,6 +51,7 @@
 * Materials Design
 * Double tap to add restaurant
 * User can delete account
+* Switching to detail activity animation just enlargens picture.
 * User can pick their favorite restaurant that shows on their profile
 * User can pick between fusion, combination, exclusion
 
