@@ -24,7 +24,7 @@ public class Restaurant  {
         imageUrl = jsonObject.getString("image_url");
         address = jsonObject.getJSONObject("location").getString("address1");
         id = jsonObject.getString("id");
-        hours = (List<String>) jsonObject.getJSONArray("hours").getJSONObject(0).getJSONArray("open");
+        //hours = (List<String>) jsonObject.getJSONArray("hours").getJSONObject(0).getJSONArray("open");
     }
 
     public Restaurant(ParseRestaurant restaurant) throws ParseException {

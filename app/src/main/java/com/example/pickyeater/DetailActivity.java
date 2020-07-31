@@ -136,7 +136,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseRestaurant> restaurants, ParseException e) {
                 // If restaurant is already created in Parse
-                if (restaurants.size() != 0 || restaurants.get(0).getKeyHours() == null){
+                if (restaurants.size() != 0 && restaurants.get(0).getKeyHours() == null){
 
                     // Restaurant add function
                     if (RemoveFrom(restaurants.get(0)) == false){
