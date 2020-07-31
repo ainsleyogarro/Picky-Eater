@@ -31,7 +31,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Headers;
@@ -91,6 +94,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 JSONObject restaurant = json.jsonObject;
                 try {
+
                     tvTitle.setText(restaurant.getString("name"));
                     JSONArray address = restaurant.getJSONObject("location").getJSONArray("display_address");
                     for (int i = 0; i <address.length() ; i++) {
