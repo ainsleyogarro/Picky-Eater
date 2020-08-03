@@ -12,7 +12,7 @@ public class ParseRestaurant extends ParseObject {
     public static final String KEY_ID = "Restid";
     public static final String KEY_IMAGE_URL = "imageUrl";
     public static final String KEY_ADDRESS = "address";
-    public static final String KEY_HOURS = "Hours";
+
 
     public String getKeyTitle(){
         return getString(KEY_TITLE);
@@ -47,7 +47,5 @@ public class ParseRestaurant extends ParseObject {
         put(KEY_ADDRESS, address);
     }
 
-    public List getKeyHours(){ return getList(KEY_HOURS);}
 
-    public void setKeyHours(List hours){put(KEY_HOURS, hours);}
 }

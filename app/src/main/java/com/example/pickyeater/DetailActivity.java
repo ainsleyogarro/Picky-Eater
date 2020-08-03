@@ -164,7 +164,7 @@ public class DetailActivity extends AppCompatActivity {
                     newRestaurant.setKeyImageUrl(restaurant.getImageUrl());
                     newRestaurant.setKeyTitle(restaurant.getTitle());
                     newRestaurant.setKeyAddress(restaurant.getAddress());
-                    newRestaurant.setKeyHours(restaurant.getHours());
+
                     newRestaurant.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {

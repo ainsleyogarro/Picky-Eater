@@ -18,14 +18,14 @@ public class Restaurant  {
     private String imageUrl;
     private String address;
     private String id;
-    private List<String> hours;
+
 
     public Restaurant(JSONObject jsonObject) throws JSONException{
         title = jsonObject.getString("name");
         imageUrl = jsonObject.getString("image_url");
         address = jsonObject.getJSONObject("location").getString("address1");
         id = jsonObject.getString("id");
-        hours = new ArrayList<>();
+
     }
 
     public Restaurant(ParseRestaurant restaurant) throws ParseException {
@@ -33,7 +33,7 @@ public class Restaurant  {
         imageUrl = restaurant.fetchIfNeeded().getString("imageUrl");
         id = restaurant.fetchIfNeeded().getString("Restid");
         address = restaurant.fetchIfNeeded().getString("address");
-        hours = restaurant.fetchIfNeeded().getList("Hours");
+
     }
 
     public Restaurant(){
@@ -72,11 +72,5 @@ public class Restaurant  {
         this.id = id;
     }
 
-    public List<String> getHours() {
-        return hours;
-    }
 
-    public void setHours(List<String> hours) {
-        this.hours = hours;
-    }
 }
