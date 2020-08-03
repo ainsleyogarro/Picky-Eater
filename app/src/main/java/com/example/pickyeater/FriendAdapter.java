@@ -23,6 +23,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.pickyeater.models.Restaurant;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
@@ -50,8 +51,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popupRemoveView = inflater.inflate(R.layout.removefriend_popup, null);
 
+
         popUp = new PopupWindow(popupRemoveView, 1000, 1000, true);
         View view = LayoutInflater.from(context).inflate(R.layout.item_friend, parent, false);
+
         return new FriendAdapter.ViewHolder(view);
     }
 
@@ -64,6 +67,18 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return friends.size();
+    }
+
+    public void clear(){
+
+        friends.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<ParseUser> list) {
+        friends.addAll(list);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -112,6 +127,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 @Override
                 public void onDismiss() {
                     rvFriend.setVisibility(View.VISIBLE);
+                    FriendAdapter friendAdapter = (FriendAdapter) rvFriend.getAdapter();
+                    friendAdapter.notifyDataSetChanged();
+
                 }
             });
             popUp.showAtLocation(itemView, Gravity.CENTER, 0, 0);

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -107,6 +108,7 @@ public class DetailActivity extends AppCompatActivity {
                     JSONArray hours = restaurant.getJSONArray("hours").getJSONObject(0).getJSONArray("open");
                     for (int i = 0; i < hours.length() ; i++) {
                         JSONObject day = hours.getJSONObject(i);
+                        Log.i(TAG, day.toString());
                         tvHours.setText(tvHours.getText() + HoursConverter(day.getString("start"), day.getString("end"), day.getInt("day")) + "\n");
                     }
                 } catch (JSONException e) {
@@ -135,8 +137,8 @@ public class DetailActivity extends AppCompatActivity {
         query.findInBackground(new FindCallback<ParseRestaurant>() {
             @Override
             public void done(List<ParseRestaurant> restaurants, ParseException e) {
-                // If restaurant is already created in Parse
-                if (restaurants.size() != 0 && restaurants.get(0).getKeyHours() == null){
+                // If restaurant is  already created in Parse
+                if (restaurants.size() != 0){
 
                     // Restaurant add function
                     if (RemoveFrom(restaurants.get(0)) == false){
@@ -155,13 +157,14 @@ public class DetailActivity extends AppCompatActivity {
                     return;
                 }
 
-                // If restaurant is in parse
+                // If restaurant is not in parse
                 else{
                     final ParseRestaurant newRestaurant = new ParseRestaurant();
                     newRestaurant.setKeyId(restaurant.getId());
                     newRestaurant.setKeyImageUrl(restaurant.getImageUrl());
                     newRestaurant.setKeyTitle(restaurant.getTitle());
                     newRestaurant.setKeyAddress(restaurant.getAddress());
+                    newRestaurant.setKeyHours(restaurant.getHours());
                     newRestaurant.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -220,14 +223,14 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         else if (day == 4){
-            return "Tues " + open + "-" + close;
+            return "Fri " + open + "-" + close;
         }
 
         else if (day == 5){
-            return "Fri " + open + "-" + close;
+            return "Sat " + open + "-" + close;
         }
         else {
-            return "Sat " + open + "-" + close;
+            return "Sun " + open + "-" + close;
         }
 
 

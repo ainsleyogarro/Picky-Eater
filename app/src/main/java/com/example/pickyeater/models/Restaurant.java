@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //@ParseClassName("Restaurant")
@@ -24,7 +25,7 @@ public class Restaurant  {
         imageUrl = jsonObject.getString("image_url");
         address = jsonObject.getJSONObject("location").getString("address1");
         id = jsonObject.getString("id");
-        //hours = (List<String>) jsonObject.getJSONArray("hours").getJSONObject(0).getJSONArray("open");
+        hours = new ArrayList<>();
     }
 
     public Restaurant(ParseRestaurant restaurant) throws ParseException {
