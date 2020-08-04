@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.RadialGradient;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -23,14 +24,17 @@ import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.pickyeater.models.ParseRestaurant;
 import com.example.pickyeater.models.Restaurant;
+import com.loopj.android.http.HttpGet;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -45,7 +49,16 @@ import java.util.concurrent.Executors;
 import cz.msebera.android.httpclient.HttpRequest;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.utils.URIBuilder;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -78,6 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
         Glide.with(getApplicationContext()).load(profile.getParseFile("Picture").getUrl()).into(ivProfilePic);
 
         restaurants = new ArrayList<>();
+        // Adds restaurants from parse into list
         parseRestaurants = profile.getList("restaurants");
         if (parseRestaurants == null){
             parseRestaurants = new ArrayList<>();
@@ -103,6 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
+    
 
     public void FuseLists(View view) throws ParseException {
         HashMap<String, Restaurant> HashRestaurants = new HashMap<String, Restaurant>();
@@ -129,12 +144,15 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
 
+        //adapter.clear();
+        //adapter.addAll(fuseRestaurants);
         adapter = new RestaurantsAdapter(getApplicationContext(), fuseRestaurants);
         rvFriendRestaurantList.setAdapter(adapter);
     }
 
     // Meant to find list of all restaurants that are fused and open
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void Party(View view) throws ParseException {
         HashMap<String, Restaurant> HashRestaurants = new HashMap<String, Restaurant>();
 
@@ -156,70 +174,98 @@ public class ProfileActivity extends AppCompatActivity {
         for (int i = 0; i < restaurants.size(); i++) {
             if (HashRestaurants.containsKey(restaurants.get(i).getId())) {
                 // calculates if restaurant is open
-                isOpen(restaurants.get(i));
-                if (open) {
+
                     fuseRestaurants.add(restaurants.get(i));
-                }
 
             }
         }
-            //adapter = new RestaurantsAdapter(getApplicationContext(), fuseRestaurants);
-            //rvFriendRestaurantList.setAdapter(adapter);
-            adapter.clear();
-            adapter.addAll(fuseRestaurants);
 
+        for (Restaurant fRestauraunt:fuseRestaurants) {
+
+            isOpen(fRestauraunt);
+
+
+
+
+            if (!open) {
+                fuseRestaurants.remove(fRestauraunt);
+            }
+        }
+            int randomRestIndex  = (int) (Math.random() * fuseRestaurants.size());
+            Intent i = new Intent(getApplicationContext(), DetailActivity.class);
+            i.putExtra("restaurant", Parcels.wrap(fuseRestaurants.get(randomRestIndex)));
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+            startActivity(i);
 
     }
-    public void isOpen(final Restaurant restaurantInput){
+
+    // Checks if Restaurant is open
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void isOpen(final Restaurant restaurantInput)  {
         //Log.i(TAG, restaurantInput.getTitle());
 
 
 
-        AsyncHttpClient client = new AsyncHttpClient();
+       //AsyncHttpClient client = new AsyncHttpClient();
 
-        RequestHeaders authorization = new RequestHeaders();
-        authorization.put("Authorization", "Bearer " + getResources().getString(R.string.rest_secret));
-        String apiUrl = "https://api.yelp.com/v3/businesses/" +  restaurantInput.getId();
-        RequestParams params = new RequestParams();
-        client.get(apiUrl, authorization, params, new JsonHttpResponseHandler() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
+        final Thread thread = new Thread(new Runnable() {
             @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                JSONObject restaurant = json.jsonObject;
+            public void run() {
                 try {
-                    JSONArray hours = restaurant.getJSONArray("hours").getJSONObject(0).getJSONArray("open");
-                    int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
+                    final OkHttpClient client = new OkHttpClient();
+                    String apiUrl = "https://api.yelp.com/v3/businesses/" +  restaurantInput.getId();
 
-                    for (int j = 0; j <hours.length() ; j++) {
-                        if (hours.getJSONObject(j).getInt("day") == day){
-                            String todaystart= hours.getJSONObject(j).getString("start");
-                            String todayend = hours.getJSONObject(j).getString("end");
-                            Boolean overnight = hours.getJSONObject(j).getBoolean("is_overnight");
-                            LocalTime start = LocalTime.of(Integer.valueOf(todaystart.substring(0,2)),Integer.valueOf(todaystart.substring(2)));
-                            LocalTime end = LocalTime.of(Integer.valueOf(todayend.substring(0,2)), Integer.valueOf(todayend.substring(2)));
-                            open = inBetween(start, end, overnight);
-                            Log.i(TAG, "aa" + open);
+                    final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
+                    final Request request = new Request.Builder()
+                            .url(apiUrl)
+                            .addHeader("Authorization", "Bearer " + getResources().getString(R.string.rest_secret))
+                            .build();
+                    String json = "";
+                    Response responses = null;
+                    responses = client.newCall(request).execute();
+                    try {
+                        json = responses.body().string();
+                        JSONObject restaurant = new JSONObject(json);
+                        JSONArray hours = restaurant.getJSONArray("hours").getJSONObject(0).getJSONArray("open");
+
+                        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
+
+                        for (int j = 0; j < hours.length(); j++) {
+                            if (hours.getJSONObject(j).getInt("day") == day) {
+                                String todaystart = hours.getJSONObject(j).getString("start");
+                                String todayend = hours.getJSONObject(j).getString("end");
+                                Boolean overnight = hours.getJSONObject(j).getBoolean("is_overnight");
+                                LocalTime start = LocalTime.of(Integer.valueOf(todaystart.substring(0, 2)), Integer.valueOf(todaystart.substring(2)));
+                                LocalTime end = LocalTime.of(Integer.valueOf(todayend.substring(0, 2)), Integer.valueOf(todayend.substring(2)));
+                                open = inBetween(start, end, overnight);
+                                Log.i(TAG, open + "thread");
+
+
+                            }
                         }
-
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
                     }
-
-
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
-                catch (JSONException e) {
-                       Log.e(TAG, "Failure calculating hours. " , e );
-                    }
             }
-                @Override
-                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                    Log.i(TAG, "Client failure");
-                }
-            });
+        });
+        thread.start();
 
-        Log.i(TAG, "ha" + open);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
     }
+
+    // Checks hours and see if current time is in between
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Boolean inBetween(LocalTime start, LocalTime end, boolean overnight ){
@@ -269,6 +315,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         }
         fuseRestaurants.addAll(restaurants);
+
 
 
         for (int i = 0; i < restaurants.size(); i++) {
