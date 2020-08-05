@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
@@ -117,7 +118,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    
+
 
     public void FuseLists(View view) throws ParseException {
         HashMap<String, Restaurant> HashRestaurants = new HashMap<String, Restaurant>();
@@ -190,6 +191,10 @@ public class ProfileActivity extends AppCompatActivity {
             if (!open) {
                 fuseRestaurants.remove(fRestauraunt);
             }
+        }
+        if (fuseRestaurants.size() == 0){
+            Toast.makeText(getApplicationContext(), "No open restaurants in fuse", Toast.LENGTH_SHORT).show();
+            return;
         }
             int randomRestIndex  = (int) (Math.random() * fuseRestaurants.size());
             Intent i = new Intent(getApplicationContext(), DetailActivity.class);
