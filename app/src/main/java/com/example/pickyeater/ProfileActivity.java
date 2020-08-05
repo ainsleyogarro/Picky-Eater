@@ -181,6 +181,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }
 
+        ArrayList<Restaurant> openRestaurants = new ArrayList<>();
+
         for (Restaurant fRestauraunt:fuseRestaurants) {
 
             isOpen(fRestauraunt);
@@ -188,17 +190,18 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-            if (!open) {
-                fuseRestaurants.remove(fRestauraunt);
+            if (open) {
+                openRestaurants.add(fRestauraunt);
             }
         }
-        if (fuseRestaurants.size() == 0){
+        if (openRestaurants.size() == 0){
             Toast.makeText(getApplicationContext(), "No open restaurants in fuse", Toast.LENGTH_SHORT).show();
             return;
         }
-            int randomRestIndex  = (int) (Math.random() * fuseRestaurants.size());
+            int randomRestIndex  = (int) (Math.random() * openRestaurants.size());
+           
             Intent i = new Intent(getApplicationContext(), DetailActivity.class);
-            i.putExtra("restaurant", Parcels.wrap(fuseRestaurants.get(randomRestIndex)));
+            i.putExtra("restaurant", Parcels.wrap(openRestaurants.get(randomRestIndex)));
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
             startActivity(i);
 
